@@ -1,0 +1,102 @@
+@import url(https://fonts.googleapis.com/css?family=Rubik|Asap);
+
+html,
+
+body {
+  height: 100%;
+  font-family: 'Asap', sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+body {
+  padding-top: 50px; /* Required padding to stop the navbar from overlaying the content. */
+}
+
+h1 {
+  font-family: 'Rubik', sans-serif;
+  font-size: 48px;
+  color: #5cb85c;
+}
+
+h4 {
+  font-family: 'Rubik', sans-serif;
+}
+
+/* overwrite for panels that i don't want to have borders */
+.panel-no-border {
+  border: none;
+  box-shadow: none;
+}
+
+
+
+
+
+/***********/
+/* nav bar */
+/***********/
+
+.navbar-gl {
+  background-color:#fff;
+  font-family: 'Rubik', sans-serif;
+  color:#000;
+  border-radius:0;
+  box-shadow: inset 0px 6px 0px #5cb85c; /* top border */
+}
+
+/* link font colour */
+.navbar-gl .navbar-nav > li > a {
+  color:#000;
+}
+
+/* link hover colour */
+.navbar-gl .navbar-nav  > li > a:hover, li > a:active  {
+  color:#5cb85c;
+}
+
+/* background change when links clicked */
+.navbar-gl .navbar-nav > li > a:focus, li > a:active {
+  color:#5cb85c;
+  background-color: #e7e7e7;
+  box-shadow: inset 0px 6px 0px #3e7b3e;
+}
+
+.navbar-gl .navbar-brand {
+  color:#000;
+}
+
+.navbar-gl .navbar-brand:hover {
+  color:#5cb85c;
+}
+
+/* change drop down menu text colour and overwrite box-shadow on click */
+.navbar-gl .navbar-nav .open .dropdown-menu > li > a, .navbar-default .navbar-nav .open .dropdown-menu {
+  color:#5cb85c;
+  box-shadow: inset 0px 0px 0px #fff;
+}
+
+
+
+
+/**********/
+/* footer */
+/**********/
+footer {
+  margin: 30px 0;
+}
+
+
+
+
+
+/******************/
+/* responsiveness */
+/******************/
+
+/* so the search bar in the footer doesn't pull right when it stacks -> 768px = tablet */
+@media (min-width: 768px) {
+  .pull-right-lg {
+    float: right;
+  }
+}

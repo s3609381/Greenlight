@@ -1,0 +1,10 @@
+[26-Jun-2016 07:57:43 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'greenlight.users' doesn't exist' in /home/ubuntu/workspace/Byrons_dashboard/index.php:23
+Stack trace:
+#0 /home/ubuntu/workspace/Byrons_dashboard/index.php(23): PDOStatement->execute()
+#1 {main}
+  thrown in /home/ubuntu/workspace/Byrons_dashboard/index.php on line 23
+[27-Jun-2016 13:43:13 UTC] PHP Warning:  PDO::__construct(): php_network_getaddresses: getaddrinfo failed: Name or service not known in /home/ubuntu/workspace/Byrons_dashboard/config.php on line 11
+[27-Jun-2016 13:43:13 UTC] PHP Stack trace:
+[27-Jun-2016 13:43:13 UTC] PHP   1. {main}() /home/ubuntu/workspace/Byrons_dashboard/index.php:0
+[27-Jun-2016 13:43:13 UTC] PHP   2. include() /home/ubuntu/workspace/Byrons_dashboard/index.php:3
+[27-Jun-2016 13:43:13 UTC] PHP   3. PDO->__construct() /home/ubuntu/workspace/Byrons_dashboard/config.php:11
