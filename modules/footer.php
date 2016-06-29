@@ -1,13 +1,17 @@
 <footer>
+
+  <!-- will add a contact us link and maybe site map eventually - havent decided where to put it yet -->
+
+
   <div class="row">
     <div class="col-lg-12">
       <div class="col-xs-12 col-sm-6 col-md-8">
-      <p>
+        <p>
 
-        <span class="glyphicon glyphicon-copyright-mark"></span> ;DROP TABLE team
-        <script>
-        document.write(new Date().getFullYear());
-        </script>.</p>
+          <span class="glyphicon glyphicon-copyright-mark"></span> ;DROP TABLE team
+          <script>
+            document.write(new Date().getFullYear());
+          </script>. </p>
       </div>
       <div class="col-xs-6 col-md-4">
 
@@ -19,13 +23,10 @@
         </form>
       </div>
 
-      </div>
     </div>
+  </div>
 
-
-
-
-    <!-- in the case of needing a disclaimer, uncomment this:
+  <!-- in the case of needing a disclaimer, uncomment this:
 
     <div class="row">
       <div class="col-lg-12">
@@ -38,4 +39,4 @@
     -->
 
 
-  </footer>
+</footer>

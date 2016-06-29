@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 
+
+<!-- a couple lines of code to redirect the user to the dashboard instead of the landing page if they are logged in -->
 <?php
 session_start();
-if(!isset($_SESSION['login_success'])){ //if login in session is not set
-    header("Location: login.php");
+if(isset($_SESSION['login_success'])){ //if login in session is not set
+    header("Location: dashboard.php");
 }
 ?> 
 
 <html lang="en">
+
 
 <head>
     <meta charset="utf-8">
@@ -33,15 +36,38 @@ if(!isset($_SESSION['login_success'])){ //if login in session is not set
 </head>
 
 <body>
+    <!-- nav bar + header -->
+    <?php include("modules/nav.php") ?>
 
-<!--- if logged in, the index should be the dashboard -->
-<center>
-<a href ="dashboard.php">Dashboard</a> |
+    <!-- content and footer -->
+    <div class="container">
 
-<!-- if not logged in then the index should be the landing page -->
-<a href="landing.php">Landing Page</a>
+        <!-- misc test content -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Greenlight
+                </h1>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-no-border">
+                    <div class="panel-body">
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
+                            voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+                            velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
+                            consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+                        <a href="#" class="btn btn-lg btn-success">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
 
-</center>
+        <!-- footer -->
+        <?php include("modules/footer.php") ?>
+
+    </div>
+    <!-- /contatiner -->
 </body>
 
 </html>

@@ -72,35 +72,35 @@
       }
     ?>
 
-    <div class="row">
-      <div class="col-lg-12">
+      <div class="row">
+        <div class="col-lg-12">
 
-        <h1 class="page-header">
+          <h1 class="page-header">
           Login
         </h1>
-      </div>
-      <div class="col-md-6">
-        <div class="panel panel-no-border">
-          <div class="panel-body">
+        </div>
+        <div class="col-md-6">
+          <div class="panel panel-no-border">
+            <div class="panel-body">
 
-            <form action="" method="post" class="form-horizontal">
-              <div class="form-group">
-                <label for="inputUsername" class="col-sm-2 control-label">Username</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
+              <form action="" method="post" class="form-horizontal">
+                <div class="form-group">
+                  <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-                <div class="col-sm-10">
-                  <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
+                <div class="form-group">
+                  <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                  <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
+                  </div>
                 </div>
-              </div>
-              <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                  <div class="checkbox">
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
 
-                    <!-- remove comment for check box
+                      <!-- remove comment for check box
 
                     <label>
                     <input type="checkbox"> Remember me
@@ -108,26 +108,27 @@
 
                 -->
 
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <input class ="btn btn-success" type="submit" name='submit' value="Login" />
-            </div>
-          </div>
-        </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <input class="btn btn-success" type="submit" name='submit' value="Login" />
+                  </div>
+                </div>
+              </form>
 
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+      <hr>
+
+      <!-- footer -->
+      <?php include("modules/footer.php") ?>
+
   </div>
-</div>
-<hr>
-
-<!-- footer -->
-<?php include("modules/footer.php") ?>
-
-</div><!-- /contatiner -->
+  <!-- /contatiner -->
 </body>
 
 </html>

@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+
+<?php
+session_start();
+?> 
+
+
 <html lang="en">
 
 <head>
@@ -31,28 +37,33 @@
     <!-- content and footer -->
     <div class="container">
 
-      <!-- misc test content -->
+        <!-- misc test content -->
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Greenlight
+                    Search
                 </h1>
             </div>
             <div class="col-md-12">
                 <div class="panel panel-no-border">
                     <div class="panel-body">
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-                        <a href="#" class="btn btn-lg btn-success">Sign Up</a>
+                        <form class="form-inline" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>
-          </div>
+        </div>
         <hr>
 
         <!-- footer -->
         <?php include("modules/footer.php") ?>
 
-    </div><!-- /contatiner -->
+    </div>
+    <!-- /contatiner -->
 </body>
 
 </html>

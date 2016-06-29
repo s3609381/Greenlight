@@ -39,17 +39,18 @@ if(!isset($_SESSION['login_success'])){ //if login in session is not set
   <!-- content and footer -->
   <div class="container">
 
-    <h1><?php echo 'Signed in as '.$_SESSION['login_success']; ?> </h1> 
-       <a href = "session_dump.php">View Session</a> | <a href = "logout.php">Sign Out</a> 
+    <h1><?php echo 'Signed in as '.$_SESSION['login_success']; ?> </h1>
+    <a href="session_dump.php">View Session</a> | <a href="logout.php">Sign Out</a>
 
-    
 
-<hr>
 
-<!-- footer -->
-<?php include("modules/footer.php") ?>
+    <hr>
 
-</div><!-- /contatiner -->
+    <!-- footer -->
+    <?php include("modules/footer.php") ?>
+
+  </div>
+  <!-- /contatiner -->
 </body>
 
 </html>
