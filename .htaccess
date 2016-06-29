@@ -1,0 +1,18 @@
+Order Deny,Allow
+Allow from any
+
+ErrorDocument 404 /404.htm
+ErrorDocument 500 /500.htm
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  
+  RewriteRule ^(.*)$ api.php?url=$1 [PT,L,B]
+
+</IfModule>
+
+Options +FollowSymLinks
+RewriteEngine On

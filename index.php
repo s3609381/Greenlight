@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+
+<?php
+session_start();
+if(!isset($_SESSION['login_success'])){ //if login in session is not set
+    header("Location: login.php");
+}
+?> 
+
 <html lang="en">
 
 <head>
