@@ -10,7 +10,7 @@ ErrorDocument 500 /500.htm
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   
-  RewriteRule ^(.*)$ api.php?url=$1 [PT,L,B]
+  RewriteRule ^api/([^/\.]+)/?$ api.php?url=$1 [PT,L,B]
 
 </IfModule>
 

@@ -38,11 +38,27 @@ if(!isset($_SESSION['login_success'])){ //if login in session is not set
 
   <!-- content and footer -->
   <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
 
-    <h1><?php echo 'Signed in as '.$_SESSION['login_success']; ?> </h1>
-    <a href="session_dump.php">View Session</a> | <a href="logout.php">Sign Out</a>
+        <h1 class="page-header">
+          <?php echo 'Signed in as '.$_SESSION['login_success']; ?>
+        </h1>
+      </div>
+
+      <div class="col-md-12">
+        <div class="panel panel-no-border">
+          <div class="panel-body">
+            <a href="session_dump.php">View Session</a> | <a href="logout.php">Sign Out</a>
+            
+          </div>
+        </div>
+      </div>
 
 
+
+
+    </div>
 
     <hr>
 

@@ -43,6 +43,9 @@
             <li>
               <a href="">Settings</a>
             </li>
+            <li>
+              <a href="logout.php">Log Out</a>
+            </li>
           </ul>
         </li>
 

@@ -42,7 +42,7 @@ if(isset($_SESSION['login_success'])){ //if login in session is not set
     <!-- content and footer -->
     <div class="container">
 
-        <!-- misc test content -->
+        <!-- content -->
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">

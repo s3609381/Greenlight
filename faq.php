@@ -26,6 +26,7 @@ session_start();
     <!-- js / jquery -->
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/faq.js"></script>
 
 </head>
 
@@ -50,7 +51,7 @@ session_start();
                     <div class="panel-heading">
                         <h3 class="panel-title">Does my greenlight have to be public?</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body-hidden">
                         No, you can have a public greenlight that other people can see without a link or you can select your light to be a private greenlight, where you are the only person who sees it. Optionally your private greenlight can be share via a link with other people.
                         Only people who have this private link can see the greenlight.
                     </div>
@@ -60,7 +61,7 @@ session_start();
                     <div class="panel-heading">
                         <h3 class="panel-title">Question</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body-hidden">
                         Answer
                     </div>
                 </div>
@@ -69,7 +70,7 @@ session_start();
                     <div class="panel-heading">
                         <h3 class="panel-title">Question</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body-hidden">
                         Answer
                     </div>
                 </div>

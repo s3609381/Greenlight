@@ -18,7 +18,8 @@ class SQLConnector {
 	public $lastSuccessfullQuery;
 	public $lastRowCount;
 	public $lastInsertID;
-	
+
+//the type can be changed if we are interfacing with a different database server
 	function __construct($server, $database, $user, $password, $type = "mysql") {
 
 		$this->server = $server;

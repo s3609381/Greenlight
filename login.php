@@ -18,17 +18,17 @@
 
 
 		if($errMsg == ''){
-			$records = $db->prepare('SELECT * FROM users WHERE username = :demo AND password =:demo');
-			$records->bindParam(':demo', $username);
-			$records->bindParam(':demo', $password);
+			$records = $db->prepare("SELECT * FROM tblUsers WHERE UserName = :username AND Password = :password ");
+			$records->bindParam(':username', $username);
+			$records->bindParam(':password', $password);
 			$records->execute();
 			$results = $records->fetch(PDO::FETCH_ASSOC);
 			if($results > 0){
-				$_SESSION['login_success'] = $results['username'];
+				$_SESSION['login_success'] = $results['UserName'];
 				header('location:dashboard.php');
 				exit;
 			}else{
-				$errMsg .= 'Username and Password are not found<br>';
+				$errMsg .= 'Incorrect username or password.<br>';
 			}
 		}
 	}
@@ -47,7 +47,7 @@
   <link rel="apple-touch-icon" href="">
   <link rel="shortcut icon" href="">
 
-  <title>Greenlight</title>
+  <title>Greenlight - Login</title>
 
   <!-- css -->
   <link href="css/bootstrap.min.css" rel="stylesheet">

@@ -1,0 +1,339 @@
+-- Query to create database, all tables and fields, set primary keys and create foreign keys
+-- V1, original file
+-- V2, removed FeedID from tblUsers
+
+
+-- Database: `greenlight`
+CREATE DATABASE IF NOT EXISTS `greenlight` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `greenlight`;
+
+
+-- create table Audit
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblAudit`
+(
+	`AuditID` int(10) NOT NULL AUTO_INCREMENT,
+	`UserID` int(10) NOT NULL,
+	`TableReference` int(10) NOT NULL,
+    `AuditString` varchar(50) not null,
+    `AuditTime` datetime not null,
+    PRIMARY KEY (`AuditID`),
+    KEY `UserID` (`UserID`),
+    KEY `TableReference` (`TableReference`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblAudit`:
+--   `TableReference`
+--       `tblReferenceTable` -> `ReferenceID`
+--   `UserID`
+--       `tblUsers` -> `UserID`
+
+
+
+-- create table Feed
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblFeed`
+(
+	`FeedID` int(10) NOT NULL AUTO_INCREMENT,
+	`UserID` int(10) NOT NULL,
+	`LightID` int(10) NOT NULL,
+    PRIMARY KEY (`FeedID`),
+    KEY `UserID` (`UserID`),
+    KEY `LightID` (`LightID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblFeed`:
+--   `UserID`
+--       `tblUsers` -> `UserID`
+--   `LightID`
+--       `tblLights` -> `LightID`
+
+
+
+-- create table LightColour
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblLightColour`
+(
+	`ColourID` int(10) NOT NULL AUTO_INCREMENT,
+	`DetailsID` int(10) NOT NULL,
+	`HexValue` varchar(7) NOT NULL,
+    PRIMARY KEY (`ColourID`),
+    KEY `DetailsID` (`DetailsID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblLightColour`:
+--   `DetailsID`
+--       `tblUserDetailsSettings` -> `DetailsID`
+
+
+  
+-- create table Lights
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblLights`
+(
+	`LightID` int(10) NOT NULL AUTO_INCREMENT,
+	`UserID` int(10) NOT NULL,
+	`TriggerTypeName` int(10) NOT NULL,
+    `ColourID` int(10) not null,
+    `LightType` bit(1) not null,
+    `Public` bit(1) not null,
+    `State` bit(1) not null,
+    `GroupLight` bit(1) not null,
+    `InviteAllowed` bit(1) not null,
+    `PostToSocialMedia` bit(1) not null,
+    `LightSocialMediaID` int(10) null,
+    `Reoccurrence` int(10) null,
+    PRIMARY KEY (`LightID`),
+    KEY `UserID` (`UserID`),
+    KEY `TriggerTypeName` (`TriggerTypeName`),
+    KEY `LightSocialMediaID` (`LightSocialMediaID`),
+    KEY `ColourID` (`ColourID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblLights`:
+--   `UserID`
+--       `tblUsers` -> `UserID`
+--   `TriggerTypeName`
+--       `tblTriggerType` -> `TriggerTypeName`
+--   `LightSocialMediaID`
+--       `tblLightSocialMedia` -> `LightSocialMediaID`
+--   `ColourID`
+--       `tblLightColour` -> `ColourID`
+
+  
+  
+-- create table LightSocialMedia
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblLightSocialMedia`
+(
+	`LightSocialMediaID` int(10) NOT NULL AUTO_INCREMENT,
+	`LightID` int(10) NOT NULL,
+	`UserID` int(10) NOT NULL,
+    `SocialMediaID` int(10) not null,
+    PRIMARY KEY (`LightSocialMediaID`),
+    KEY `LightID` (`LightID`),
+    KEY `UserID` (`UserID`),
+    KEY `SocialMediaID` (`SocialMediaID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblLightSocialMedia`:
+--   `SocialMediaID`
+--       `tblSocialMediaAccounts` -> `SocialMediaID`
+--   `LightID`
+--       `tblLights` -> `LightID`
+
+  
+  
+-- create table Reference Table
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblReferenceTable`
+(
+	`ReferenceID` int(10) NOT NULL AUTO_INCREMENT,
+	`TableName` varchar(50) NOT NULL,
+  PRIMARY KEY (`ReferenceID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+  
+
+-- create table Sessions
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblSessions`
+(
+	`SessionID` int(10) NOT NULL AUTO_INCREMENT,
+	`UserID` int(10) NOT NULL,
+	`SocialMediaID` int(10) NULL,
+    `AuthenticationTime` datetime null,
+    `SessionExpiration` datetime null,
+    PRIMARY KEY (`SessionID`),
+    KEY `UserID` (`UserID`),
+    KEY `SocialMediaID` (`SocialMediaID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblSessions`:
+--   `SocialMediaID`
+--       `tblSocialMediaAccounts` -> `SocialMediaID`
+--   `UserID`
+--       `tblUsers` -> `UserID`
+
+  
+  
+-- create table SocialMediaAccounts
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblSocialMediaAccounts`
+(
+	`SocialMediaID` int(10) NOT NULL AUTO_INCREMENT,
+	`UserID` int(10) NOT NULL,
+	`SessionID` int(10) NOT NULL,
+    `SocialMediaName` varchar(50) null,
+    `SocialMediaLogin` varchar(50) not null,
+    `SocialMediaPassword` varchar(150) not null,
+    PRIMARY KEY (`SocialMediaID`),
+    KEY `UserID` (`UserID`),
+    KEY `SessionID` (`SessionID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblSocialMediaAccounts`:
+--   `SessionID`
+--       `tblSessions` -> `SessionID`
+--   `UserID`
+--       `tblUsers` -> `UserID`
+
+  
+
+-- create table TriggerType
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblTriggerType`
+(
+	`TriggerTypeName` int(10) NOT NULL AUTO_INCREMENT,
+	`LightID` int(10) NOT NULL,
+	`TriggerValuesID` int(10) NOT NULL,
+    PRIMARY KEY (`TriggerTypeName`),
+    KEY `LightID` (`LightID`),
+    KEY `TriggerValuesID` (`TriggerValuesID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblTriggerType`:
+--   `LightID`
+--       `tblLights` -> `LightID`
+--   `TriggerValuesID`
+--       `tblTriggerValues` -> `TriggerValuesID`
+
+
+
+-- create table TriggerValues
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblTriggerValues`
+(
+	`TriggerValuesID` int(10) NOT NULL AUTO_INCREMENT,
+	`LightID` int(10) NOT NULL,
+	`TriggerType` int(10) NOT NULL,
+    `GPSLong` varchar(150) null,
+    `GPSLat` varchar(150) null,
+    `DateTimeTrigger` datetime null,
+    `PrimaryTimerTrigger` time null,
+    `SecondaryTimerTrigger` time null,
+    PRIMARY KEY (`TriggerValuesID`),
+    KEY `LightID` (`LightID`),
+    KEY `TriggerType` (`TriggerType`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblTriggerValues`:
+--   `TriggerType`
+--       `tblTriggerType` -> `TriggerTypeName`
+--   `LightID`
+--       `tblLights` -> `LightID`
+
+
+  
+-- create table UserDetailsSettings
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblUserDetailsSettings`
+(
+	`DetailsID` int(10) NOT NULL AUTO_INCREMENT,
+	`UserID` int(10) NOT NULL,
+	`EmailAuthorised` bit NOT NULL,
+    `FirstName` varchar(50) not null,
+    `LastName` varchar(50) not null,
+    `DefaultLightColourID` int(10) not null,
+    `AllowSocialMediaPosting` bit not null,
+    `MobileNumber` int(15) null,
+    `AllowGPSLocation` bit not null,
+    PRIMARY KEY (`DetailsID`),
+    KEY `UserID` (`UserID`),
+    KEY `DefaultLightColourID` (`DefaultLightColourID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+-- RELATIONS FOR TABLE `tblUserDetailsSettings`:
+--   `DefaultLightColourID`
+--       `tblLightColour` -> `ColourID`
+--   `UserID`
+--       `tblUsers` -> `UserID`
+
+  
+
+-- create table Users
+CREATE TABLE IF NOT EXISTS `greenlight`.`tblUsers`
+(
+	`UserID` int(10) NOT NULL AUTO_INCREMENT,
+	`Email` varchar(150) NOT NULL,
+	`Password` varchar(255) NOT NULL,
+    `UserName` varchar(50) not null,
+    `LastLogin` datetime not null,
+    `SignUpDate` datetime not null,
+    PRIMARY KEY (`UserID`)
+)
+  ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
+
+
+
+--
+-- Constraints for table `tblAudit`
+--
+ALTER TABLE `tblAudit`
+  ADD CONSTRAINT `tblAudit_ibfk_2` FOREIGN KEY (`TableReference`) REFERENCES `tblReferenceTable` (`ReferenceID`),
+  ADD CONSTRAINT `tblAudit_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `tblUsers` (`UserID`);
+
+--
+-- Constraints for table `tblFeed`
+--
+ALTER TABLE `tblFeed`
+  ADD CONSTRAINT `tblFeed_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `tblUsers` (`UserID`),
+  ADD CONSTRAINT `tblFeed_ibfk_1` FOREIGN KEY (`LightID`) REFERENCES `tblLights` (`LightID`);
+
+--
+-- Constraints for table `tblLightColour`
+--
+ALTER TABLE `tblLightColour`
+  ADD CONSTRAINT `tblLightColour_ibfk_1` FOREIGN KEY (`DetailsID`) REFERENCES `tblUserDetailsSettings` (`DetailsID`);
+
+--
+-- Constraints for table `tblLights`
+--
+ALTER TABLE `tblLights`
+  ADD CONSTRAINT `tblLights_ibfk_4` FOREIGN KEY (`UserID`) REFERENCES `tblUsers` (`UserID`),
+  ADD CONSTRAINT `tblLights_ibfk_1` FOREIGN KEY (`TriggerTypeName`) REFERENCES `tblTriggerType` (`TriggerTypeName`),
+  ADD CONSTRAINT `tblLights_ibfk_2` FOREIGN KEY (`LightSocialMediaID`) REFERENCES `tblLightSocialMedia` (`LightSocialMediaID`),
+  ADD CONSTRAINT `tblLights_ibfk_3` FOREIGN KEY (`ColourID`) REFERENCES `tblLightColour` (`ColourID`);
+
+--
+-- Constraints for table `tblLightSocialMedia`
+--
+ALTER TABLE `tblLightSocialMedia`
+  ADD CONSTRAINT `tblLightSocialMedia_ibfk_2` FOREIGN KEY (`SocialMediaID`) REFERENCES `tblSocialMediaAccounts` (`SocialMediaID`),
+  ADD CONSTRAINT `tblLightSocialMedia_ibfk_1` FOREIGN KEY (`LightID`) REFERENCES `tblLights` (`LightID`);
+
+--
+-- Constraints for table `tblSessions`
+--
+ALTER TABLE `tblSessions`
+  ADD CONSTRAINT `tblSessions_ibfk_2` FOREIGN KEY (`SocialMediaID`) REFERENCES `tblSocialMediaAccounts` (`SocialMediaID`),
+  ADD CONSTRAINT `tblSessions_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `tblUsers` (`UserID`);
+
+--
+-- Constraints for table `tblSocialMediaAccounts`
+--
+ALTER TABLE `tblSocialMediaAccounts`
+  ADD CONSTRAINT `tblSocialMediaAccounts_ibfk_2` FOREIGN KEY (`SessionID`) REFERENCES `tblSessions` (`SessionID`),
+  ADD CONSTRAINT `tblSocialMediaAccounts_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `tblUsers` (`UserID`);
+
+--
+-- Constraints for table `tblTriggerType`
+--
+ALTER TABLE `tblTriggerType`
+  ADD CONSTRAINT `tblTriggerType_ibfk_2` FOREIGN KEY (`LightID`) REFERENCES `tblLights` (`LightID`),
+  ADD CONSTRAINT `tblTriggerType_ibfk_1` FOREIGN KEY (`TriggerValuesID`) REFERENCES `tblTriggerValues` (`TriggerValuesID`);
+
+--
+-- Constraints for table `tblTriggerValues`
+--
+ALTER TABLE `tblTriggerValues`
+  ADD CONSTRAINT `tblTriggerValues_ibfk_2` FOREIGN KEY (`TriggerType`) REFERENCES `tblTriggerType` (`TriggerTypeName`),
+  ADD CONSTRAINT `tblTriggerValues_ibfk_1` FOREIGN KEY (`LightID`) REFERENCES `tblLights` (`LightID`);
+
+--
+-- Constraints for table `tblUserDetailsSettings`
+--
+ALTER TABLE `tblUserDetailsSettings`
+  ADD CONSTRAINT `tblUserDetailsSettings_ibfk_2` FOREIGN KEY (`DefaultLightColourID`) REFERENCES `tblLightColour` (`ColourID`),
+  ADD CONSTRAINT `tblUserDetailsSettings_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `tblUsers` (`UserID`);
+
