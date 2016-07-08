@@ -26,8 +26,6 @@
           <a href="search.php">SEARCH</a>
         </li>
 
-        <!-- want to display different options in the nav bar depending on whether or not the user is logged in. not sure whether we undertake it within the nav bar itself or have 2 different nav bar modules to choose from -->
-
         <!-- if not logged in: -->
         <li>
           <a href="login.php">LOG IN / SIGN UP</a>
@@ -35,6 +33,6 @@
 
       </ul>
     </div>
-    <!-- /.navbar-collapse -->
+    <!-- /navbar-collapse -->
   </div>
 </nav>

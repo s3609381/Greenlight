@@ -61,7 +61,16 @@
 
 <body>
   <!-- nav bar + header -->
-  <?php include("modules/nav.php") ?>
+  <?php
+  
+  if(!isset($_SESSION['login_success'])){ 
+    include("modules/nav.php");
+  }
+  else{
+    include("modules/nav-loggedin.php");
+  }
+  
+  ?>
 
   <!-- content and footer -->
   <div class="container">
