@@ -61,8 +61,7 @@ function parseLoginRequest() {
 			login();
 			break;
 		default:
-			//Return unauthorised if its not a GET or a POST
-			//processError(401);
+			http_response_code(401);
 			break;
 	}	
 
@@ -70,30 +69,38 @@ function parseLoginRequest() {
 
 function login()
 {
-	echo "reached the login page \n";
-	$hardcodedUser = '1';
-	$hardcodedPassword = '2';
-	
-	
+	include('config.php');
+
+	echo "reached the login function \n";
+	$authenticated = false;
 	//php://input = the body of a request sent to the site
 	$input = json_decode(file_get_contents('php://input'),true);
-	echo $input['username'];
-	echo $input['password'];
-
-	//$result = array();
-	//$result['username'] = 'username';
-	//processResponseCode(200);
+	$requestUser = $input['username'];
+	$requestPassword = $input['password'];
 	
-	/* 
-	If I wanted to get one from a DB, I could do something like:
-	$conn = new SQLConnector($server, $database, $user, $password);
-	$user = $conn->Select("users", array("*"), "", array("username" => $user));		// Check the utils.sql.php file
-	*/
-	//echo json_encode($result);
+	//check if the credentials match the records in the DB
+	$records = $db->prepare("SELECT * FROM tblUsers WHERE UserName = :username AND Password = :password ");
+		$records->bindParam(':username', $requestUser);
+		$records->bindParam(':password', $requestPassword);
+		$records->execute();
+		$results = $records->fetch(PDO::FETCH_ASSOC);
+		if($results > 0){
+			//If the credentials match return a session token
+			$authenticated = true; 
+			$token = createSessionToken(32);
+			insertSessionToken($requestUser, $token)
+			echo "Session : $token";
+			
+		}else{
+			// if they dont return the HTTP response code 401
+			echo "Bad Credentials";
+			http_response_code(401);
+		}
+
 }
 
 function getLights() 
-	// Should do a check here to see if a sessionId has been provided.
+	// Should do a check here to see if a sessionId has been provided in the request.
 
 {
 	$result = array();
@@ -109,4 +116,24 @@ function processResponse($code, $type = 'application/json') {
 	http_response_code($code);
 }
 
-?>
+
+
+
+function createSessionToken($val){
+	//http://stackoverflow.com/questions/17596605/how-to-generate-unique-session-id-without-the-use-of-session-id
+      $chars="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,-";
+      srand((double)microtime()*1000000);
+      $i = 0;
+      $pass = '' ;
+      while ($i<=$val) 
+    {
+        $num  = rand() % 33;
+        $tmp  = substr($chars, $num, 1);
+        $pass = $pass . $tmp;
+        $i++;
+      }
+    return $pass;
+    }
+    
+    
+ ?>

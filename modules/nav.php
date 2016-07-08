@@ -33,22 +33,6 @@
           <a href="login.php">LOG IN / SIGN UP</a>
         </li>
 
-        <!-- if logged in: -->
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-            <li>
-              <a href="dashboard.php">Dashboard</a>
-            </li>
-            <li>
-              <a href="">Settings</a>
-            </li>
-            <li>
-              <a href="logout.php">Log Out</a>
-            </li>
-          </ul>
-        </li>
-
       </ul>
     </div>
     <!-- /.navbar-collapse -->

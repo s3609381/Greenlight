@@ -82,6 +82,7 @@ CREATE TABLE IF NOT EXISTS `greenlight`.`tblLights`
     `PostToSocialMedia` bit(1) not null,
     `LightSocialMediaID` int(10) null,
     `Reoccurrence` int(10) null,
+    `LightDeleted` bit(1) not null,
     PRIMARY KEY (`LightID`),
     KEY `UserID` (`UserID`),
     KEY `TriggerTypeName` (`TriggerTypeName`),
