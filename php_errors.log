@@ -8,3 +8,27 @@ Stack trace:
 [27-Jun-2016 13:43:13 UTC] PHP   1. {main}() /home/ubuntu/workspace/Byrons_dashboard/index.php:0
 [27-Jun-2016 13:43:13 UTC] PHP   2. include() /home/ubuntu/workspace/Byrons_dashboard/index.php:3
 [27-Jun-2016 13:43:13 UTC] PHP   3. PDO->__construct() /home/ubuntu/workspace/Byrons_dashboard/config.php:11
+[09-Jul-2016 00:43:01 UTC] PHP Warning:  include(modules/nav.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/error/404.php on line 40
+[09-Jul-2016 00:43:01 UTC] PHP Stack trace:
+[09-Jul-2016 00:43:01 UTC] PHP   1. {main}() /home/ubuntu/workspace/error/404.php:0
+[09-Jul-2016 00:43:01 UTC] PHP Warning:  include(): Failed opening 'modules/nav.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/error/404.php on line 40
+[09-Jul-2016 00:43:01 UTC] PHP Stack trace:
+[09-Jul-2016 00:43:01 UTC] PHP   1. {main}() /home/ubuntu/workspace/error/404.php:0
+[09-Jul-2016 00:43:01 UTC] PHP Warning:  include(modules/footer.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/error/404.php on line 69
+[09-Jul-2016 00:43:01 UTC] PHP Stack trace:
+[09-Jul-2016 00:43:01 UTC] PHP   1. {main}() /home/ubuntu/workspace/error/404.php:0
+[09-Jul-2016 00:43:01 UTC] PHP Warning:  include(): Failed opening 'modules/footer.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/error/404.php on line 69
+[09-Jul-2016 00:43:01 UTC] PHP Stack trace:
+[09-Jul-2016 00:43:01 UTC] PHP   1. {main}() /home/ubuntu/workspace/error/404.php:0
+[09-Jul-2016 00:43:02 UTC] PHP Warning:  include(modules/nav.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/error/404.php on line 40
+[09-Jul-2016 00:43:02 UTC] PHP Stack trace:
+[09-Jul-2016 00:43:02 UTC] PHP   1. {main}() /home/ubuntu/workspace/error/404.php:0
+[09-Jul-2016 00:43:02 UTC] PHP Warning:  include(): Failed opening 'modules/nav.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/error/404.php on line 40
+[09-Jul-2016 00:43:02 UTC] PHP Stack trace:
+[09-Jul-2016 00:43:02 UTC] PHP   1. {main}() /home/ubuntu/workspace/error/404.php:0
+[09-Jul-2016 00:43:02 UTC] PHP Warning:  include(modules/footer.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/error/404.php on line 69
+[09-Jul-2016 00:43:02 UTC] PHP Stack trace:
+[09-Jul-2016 00:43:02 UTC] PHP   1. {main}() /home/ubuntu/workspace/error/404.php:0
+[09-Jul-2016 00:43:02 UTC] PHP Warning:  include(): Failed opening 'modules/footer.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/error/404.php on line 69
+[09-Jul-2016 00:43:02 UTC] PHP Stack trace:
+[09-Jul-2016 00:43:02 UTC] PHP   1. {main}() /home/ubuntu/workspace/error/404.php:0

@@ -11,11 +11,6 @@
 To get here, load this into apache, make sure mod_rewrite is enabled, then navigate to <host>/api/users or <host>/api/configuration
 */
 
-echo "<h2>Reached the API Redirect!</h2>";
-echo "Hello world!<br>";
-echo "Theres a heap of errors here. Don't worrry its a work in progress :)";
-
-
 if (!isset($_GET['url'])) {
 	// We have not been redirected here from the 
 	// .htaccess file, so it's not an API call
@@ -30,8 +25,6 @@ else {
 	
 	echo "The request sent to this site was a <h1>$method</h1> request \n";
 	
-
-
 	// Get the redirected path from the $_GET collection 
 	// The request path will be everything past /api for example /api/login $requestpath = login
 	$requestPath = $_GET['url'];
@@ -48,14 +41,10 @@ else {
 			break;
 	}
 }
-// it works down to here
-
-
 
 function parseLoginRequest() {
 	echo "reached the parselogin function";
 	$method = $_SERVER['REQUEST_METHOD'];
-	echo "\n $method method";
 	switch ($method) {
 		case 'POST':
 			login();
@@ -73,8 +62,11 @@ function login()
 
 	echo "reached the login function \n";
 	$authenticated = false;
+	
 	//php://input = the body of a request sent to the site
+	
 	$input = json_decode(file_get_contents('php://input'),true);
+	
 	$requestUser = $input['username'];
 	$requestPassword = $input['password'];
 	
@@ -85,10 +77,14 @@ function login()
 		$records->execute();
 		$results = $records->fetch(PDO::FETCH_ASSOC);
 		if($results > 0){
+			
 			//If the credentials match return a session token
 			$authenticated = true; 
 			$token = createSessionToken(32);
-			insertSessionToken($requestUser, $token)
+			//need to get the userid but i dont want to waste memory be querying the database again.
+			//finally figured it out
+			$userId = $results['UserId'];
+			//insertSessionToken($userId, $token);
 			echo "Session : $token";
 			
 		}else{
@@ -97,6 +93,17 @@ function login()
 			http_response_code(401);
 		}
 
+}
+//this bit needs some love
+function insertSessionToken($requestUser, $token)
+{
+	include('config.php');
+	$query = $SQL->prepare('INSERT INTO tblSessions :');
+	$query->bindValue(':uid', $user_id, PDO::PARAM_INT);
+	$query->execute();
+	
+	
+	
 }
 
 function getLights() 
@@ -115,8 +122,6 @@ function processResponse($code, $type = 'application/json') {
 	header('Content-Type: ' . $type . ';');
 	http_response_code($code);
 }
-
-
 
 
 function createSessionToken($val){

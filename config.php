@@ -9,7 +9,7 @@ define('_DB_NAME_', 'greenlight');
 try {
  $db = new PDO('mysql:host='._HOST_NAME_.';dbname='._DB_NAME_, _USERNAME_, _DB_PASSWORD);
  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
- echo "Database Connected successfully (dont forget to remove msgs at production)";
+ //echo "Database Connected successfully (dont forget to remove msgs at production)";
 } catch(PDOException $e) { 
  echo "Connection failed: " . $e->getMessage(); 
 } 

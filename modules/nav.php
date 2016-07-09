@@ -17,18 +17,18 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="about.php">ABOUT</a>
+          <a href="/about.php">ABOUT</a>
         </li>
         <li>
-          <a href="faq.php">FAQ</a>
+          <a href="/faq.php">FAQ</a>
         </li>
         <li>
-          <a href="search.php">SEARCH</a>
+          <a href="/search.php">SEARCH</a>
         </li>
 
         <!-- if not logged in: -->
         <li>
-          <a href="login.php">LOG IN / SIGN UP</a>
+          <a href="/login.php">LOG IN / SIGN UP</a>
         </li>
 
       </ul>

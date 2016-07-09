@@ -56,12 +56,17 @@ session_start();
             <div class="col-md-12">
                 <div class="panel panel-no-border">
                     <div class="panel-body">
+                        
+                        <!-- search functionality needs to be written -->
+                        
                         <form class="form-inline" role="search">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Search">
                             </div>
                             <button type="submit" class="btn btn-success">Submit</button>
                         </form>
+                        
+                        
                     </div>
                 </div>
             </div>
