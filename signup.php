@@ -91,7 +91,6 @@
                     <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
                   </div>
                 </div>
-                
                 <div class="form-group">
                   <label for="inputPassword" class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-10">
