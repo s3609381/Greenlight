@@ -3,20 +3,15 @@
 <?php
    include("config.php");
    session_start();
-
  if(isset($_POST['submit'])){
 		$errMsg = '';
 		//username and password sent from Form
 		$username = trim($_POST['username']);
 		$password = trim($_POST['password']);
-
 		if($username == '')
 			$errMsg .= 'You must enter your Username<br>';
-
 		if($password == '')
 			$errMsg .= 'You must enter your Password<br>';
-
-
 		if($errMsg == ''){
 			$records = $db->prepare("SELECT * FROM tblUsers WHERE UserName = :username AND Password = :password ");
 			$records->bindParam(':username', $username);
@@ -99,27 +94,29 @@
                     <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
                   </div>
                 </div>
+                
                 <div class="form-group">
                   <label for="inputPassword" class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-10">
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
                   </div>
                 </div>
+                
+                
+                <!-- remove comment for check box
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                     <div class="checkbox">
 
-                      <!-- remove comment for check box
-
-                    <label>
+                  <label>
                     <input type="checkbox"> Remember me
                   </label>
-
-                -->
 
                     </div>
                   </div>
                 </div>
+                 -->
+                 
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
                     <input class="btn btn-success" type="submit" name='submit' value="Login" />
