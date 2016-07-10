@@ -258,10 +258,10 @@ CREATE TABLE IF NOT EXISTS `greenlight`.`tblUsers`
 	`UserID` int(10) NOT NULL AUTO_INCREMENT,
 	`Email` varchar(150) NOT NULL,
 	`Password` varchar(255) NOT NULL,
-    `UserName` varchar(50) not null,
-    `LastLogin` datetime not null,
-    `SignUpDate` datetime not null,
-    PRIMARY KEY (`UserID`)
+  `UserName` varchar(50) not null,
+  `LastLogin` datetime null,
+  `SignUpDate` datetime not null,
+  PRIMARY KEY (`UserID`)
 )
   ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
 

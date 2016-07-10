@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.php"><img src="/images/LogoGreen.png" height="30" width="30"/></a>
+      <a class="navbar-brand" href="index.php"><img src="/images/LogoGreen.png" height="25" width="25"/></a>
       <!-- placeholder - replace with logo -->
     </div>
 

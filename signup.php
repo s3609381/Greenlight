@@ -1,35 +1,28 @@
 <!DOCTYPE html>
 
 <?php
-   include("config.php");
-   session_start();
+  include("config.php");
+  session_start();
+   
+  $username = $password = $firstName = $lastName = $email = '';
+	$usernameErr = $passwordErr = $firstNameErr = $lastNameErr = $emailErr = '';
 
- if(isset($_POST['submit'])){
-		$errMsg = '';
-		//username and password sent from Form
-		$username = trim($_POST['username']);
-		$password = trim($_POST['password']);
+  if(isset($_POST['submit'])){
+  
+    if(empty($username) == false){
+		  $username = test_input($username);
+    }
+    
+		$email = test_input($email);
+		$password = test_input($password);
+		$firstName = test_input($firstName);
+		$lastName = test_input($lastName);
 
-		if($username == '')
-			$errMsg .= 'You must enter your Username<br>';
-
-		if($password == '')
-			$errMsg .= 'You must enter your Password<br>';
-
-
-		if($errMsg == ''){
-			$records = $db->prepare("SELECT * FROM tblUsers WHERE UserName = :username AND Password = :password ");
-			$records->bindParam(':username', $username);
-			$records->bindParam(':password', $password);
-			$records->execute();
-			$results = $records->fetch(PDO::FETCH_ASSOC);
-			if($results > 0){
-				$_SESSION['login_success'] = $results['UserName'];
-				header('location:dashboard.php');
-				exit;
-			}else{
-				$errMsg .= 'Incorrect username or password.<br>';
-			}
+		function test_input($data){
+		  $data = trim($data);
+		  $data = stripslashes($data);
+		  $data = htmlspecialchars($data);
+		  return $data;
 		}
 	}
 ?>
@@ -86,16 +79,39 @@
 
               <form action="" method="post" class="form-horizontal">
                 <div class="form-group">
+                  <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                  <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputLastName" placeholder="Email" name="Email" required>
+                  </div>
+                  <?php
+                    if(isset($emailErr)){
+                      echo '<div style="color:#FF0000;text-align:center;font-size:12px;">'.$emailErr.'</div>';
+                    }
+                  ?>
+                </div>
+                
+                <div class="form-group">
                   <label for="inputUsername" class="col-sm-2 control-label">Username</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
+                    <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username">
                   </div>
+                  <?php
+                    if(isset($usernameErr)){
+                      echo '<div style="color:#FF0000;text-align:center;font-size:12px;">'.$usernameErr.'</div>';
+                    }
+                  ?>
                 </div>
+                
                 <div class="form-group">
                   <label for="inputPassword" class="col-sm-2 control-label">Password</label>
                   <div class="col-sm-10">
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
                   </div>
+                  <?php
+                    if(isset($passwordErr)){
+                      echo '<div style="color:#FF0000;text-align:center;font-size:12px;">'.$passwordErr.'</div>';
+                    }
+                  ?>
                 </div>
                 
                 <div class="form-group">
@@ -103,6 +119,11 @@
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputFirstName" placeholder="First Name" name="firstName" required>
                   </div>
+                  <?php
+                    if(isset($firstNameErr)){
+                      echo '<div style="color:#FF0000;text-align:center;font-size:12px;">'.$firstNameErr.'</div>';
+                    }
+                  ?>
                 </div>
                 
                 <div class="form-group">
@@ -110,11 +131,12 @@
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputLastName" placeholder="Last Name" name="lastName" required>
                   </div>
+                  <?php
+                    if(isset($lastNameErr)){
+                      echo '<div style="color:#FF0000;text-align:center;font-size:12px;">'.$lastNameErr.'</div>';
+                    }
+                  ?>
                 </div>
-                
-                
-                
-                
                 
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">

@@ -43,7 +43,7 @@ else {
 }
 
 function parseLoginRequest() {
-	echo "reached the parselogin function";
+	echo "reached the parselogin function.';
 	$method = $_SERVER['REQUEST_METHOD'];
 	switch ($method) {
 		case 'POST':
@@ -84,7 +84,7 @@ function login()
 			//need to get the userid but i dont want to waste memory be querying the database again.
 			//finally figured it out
 			$userId = $results['UserId'];
-			//insertSessionToken($userId, $token);
+			// insertSessionToken($userId, $token);
 			echo "Session : $token";
 			
 		}else{

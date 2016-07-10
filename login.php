@@ -13,7 +13,8 @@
 		if($password == '')
 			$errMsg .= 'You must enter your Password<br>';
 		if($errMsg == ''){
-			$records = $db->prepare("SELECT * FROM tblUsers WHERE UserName = :username AND Password = :password ");
+			$records = $db->prepare("SELECT * FROM tblUsers WHERE (Email = :email OR UserName = :username) AND Password = :password ");
+			$records->bindParam(':email', $username);
 			$records->bindParam(':username', $username);
 			$records->bindParam(':password', $password);
 			$records->execute();
@@ -89,7 +90,7 @@
 
               <form action="" method="post" class="form-horizontal">
                 <div class="form-group">
-                  <label for="inputUsername" class="col-sm-2 control-label">Username</label>
+                  <label for="inputUsername" class="col-sm-2 control-label">Username / Email</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
                   </div>
