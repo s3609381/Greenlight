@@ -4,7 +4,7 @@
 <!-- a couple lines of code to redirect the user to the dashboard instead of the landing page if they are logged in -->
 <?php
 session_start();
-if(isset($_SESSION['login_success'])){ //if login in session is not set
+if(isset($_SESSION['user_name'])){ //if login in session is not set
     header("Location: dashboard.php");
 }
 ?> 
@@ -39,7 +39,7 @@ if(isset($_SESSION['login_success'])){ //if login in session is not set
     <!-- nav bar + header -->
     <?php
   
-  if(!isset($_SESSION['login_success'])){ 
+  if(!isset($_SESSION['user_name'])){ 
     include("modules/nav.php");
   }
   else{

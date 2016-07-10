@@ -2,7 +2,7 @@
 
 <?php
 session_start();
-if(!isset($_SESSION['login_success'])){ //if login in session is not set
+if(!isset($_SESSION['user_name'])){ //if login in session is not set
   header("Location: login.php");
 }
 ?>
@@ -29,6 +29,8 @@ if(!isset($_SESSION['login_success'])){ //if login in session is not set
   <!-- js / jquery -->
   <script src="js/jquery-2.2.4.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <script src="js/dash-nav-js.js"></script>
+
   
 </head>
 
@@ -37,7 +39,7 @@ if(!isset($_SESSION['login_success'])){ //if login in session is not set
   
   <?php
   
-  if(!isset($_SESSION['login_success'])){ 
+  if(!isset($_SESSION['user_name'])){ 
     include("modules/nav.php");
   }
   else{
@@ -47,26 +49,18 @@ if(!isset($_SESSION['login_success'])){ //if login in session is not set
   ?>
   
   <!-- content and footer -->
-  <div class="container">    
-    
+  <div class="container">
+  
     <div class="row">
       <div class="col-lg-12">
         <h1 class="page-header">
-          <?php echo $_SESSION['login_success']."'s dashboard"; ?>
-        </h1>
+            <?php echo $_SESSION['user_name']."'s dashboard"; ?>
+          </h1>
       </div>
-      <div class="col-md-2">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4>Navigation</h4>
-          </div>
-          <div class="panel-body">
-            <a href="session_dump.php">View Session</a> <br/>
-            <a href="logout.php">Sign Out</a>
-            
-          </div>
-        </div>
-      </div>
+     
+     <?php include("modules/dash-nav.php"); ?> 
+      
+      
       <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -90,7 +84,6 @@ if(!isset($_SESSION['login_success'])){ //if login in session is not set
         </div>
       </div>
     </div>
-    
     
     <hr>
     

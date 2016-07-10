@@ -28,7 +28,7 @@
 
         <!-- if logged in: -->
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['login_success']; ?><b class="caret"></b></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['user_name']; ?><b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li>
               <a href="/dashboard.php">Dashboard</a>

@@ -34,7 +34,7 @@ session_start();
     <!-- nav bar + header -->
     <?php
   
-  if(!isset($_SESSION['login_success'])){ 
+  if(!isset($_SESSION['user_name'])){ 
     include("modules/nav.php");
   }
   else{

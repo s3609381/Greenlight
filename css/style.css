@@ -35,6 +35,16 @@ h3 {
   display: none;
 }
 
+.nav-header{
+  cursor: default;
+}
+
+.list-group-item.active,
+.list-group-item.active:hover,
+.list-group-item.active:focus {
+    background-color: #5cb85c;
+    border-color: #468c46;
+}
 
 /***********/
 

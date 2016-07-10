@@ -11,6 +11,7 @@
 To get here, load this into apache, make sure mod_rewrite is enabled, then navigate to <host>/api/users or <host>/api/configuration
 */
 
+
 if (!isset($_GET['url'])) {
 	// We have not been redirected here from the 
 	// .htaccess file, so it's not an API call
@@ -43,7 +44,6 @@ else {
 }
 
 function parseLoginRequest() {
-	echo "reached the parselogin function.';
 	$method = $_SERVER['REQUEST_METHOD'];
 	switch ($method) {
 		case 'POST':
@@ -83,8 +83,9 @@ function login()
 			$token = createSessionToken(32);
 			//need to get the userid but i dont want to waste memory be querying the database again.
 			//finally figured it out
-			$userId = $results['UserId'];
-			// insertSessionToken($userId, $token);
+			$userId = $results['UserID'];
+			echo $userId;
+			insertSessionToken($userId, $token);
 			echo "Session : $token";
 			
 		}else{
@@ -92,18 +93,33 @@ function login()
 			echo "Bad Credentials";
 			http_response_code(401);
 		}
-
 }
-//this bit needs some love
-function insertSessionToken($requestUser, $token)
+
+function insertSessionToken($userId, $token)
 {
 	include('config.php');
-	$query = $SQL->prepare('INSERT INTO tblSessions :');
-	$query->bindValue(':uid', $user_id, PDO::PARAM_INT);
-	$query->execute();
 	
-	
-	
+	$currentTime = new DateTime("now", new DateTimeZone('Australia/Melbourne') );
+	$currentTime->modify("+30 minutes");
+	$sessionExpirationDateString = $currentTime->format('Y-m-d H:i:s');
+	$sessionExpirationDateString;
+
+	// need to catch an exception
+	try {
+    	$query = $db->prepare("INSERT INTO tblSessions (SessionId, UserId, SocialMediaID, AuthenticationTime, SessionExpiration) VALUES (:token, :userId, NULL, NOW(), :sessionExpirationDate)");
+		$query->bindParam(':token', $token);
+		$query->bindParam(':userId', $userId);
+		$query->bindParam(':sessionExpirationDate', $sessionExpirationDateString);
+		$query->execute();
+	} catch (PDOException $e) {
+    	if ($e->getCode() == 1062) {
+        // Take some action if there is a key constraint violation, i.e. duplicate name
+        //1062 is a constraint error
+    	} else {
+        	throw $e;
+    	}
+	}
+	echo "Success!";
 }
 
 function getLights() 

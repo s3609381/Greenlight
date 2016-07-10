@@ -20,7 +20,10 @@
 			$records->execute();
 			$results = $records->fetch(PDO::FETCH_ASSOC);
 			if($results > 0){
-				$_SESSION['login_success'] = $results['UserName'];
+				$_SESSION['user_name'] = $results['UserName'];
+				$_SESSION['user_id'] = $results['UserID'];
+				$_SESSION['logged_in'] = TRUE;
+				
 				header('location:dashboard.php');
 				exit;
 			}else{
@@ -59,7 +62,7 @@
   <!-- nav bar + header -->
   <?php
   
-  if(!isset($_SESSION['login_success'])){ 
+  if(!isset($_SESSION['user_name'])){ 
     include("modules/nav.php");
   }
   else{
