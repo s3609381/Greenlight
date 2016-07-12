@@ -205,7 +205,7 @@ if(isset($_POST['signup'])){
         </div>
         <div class="col-md-6">
           <div class="panel panel-no-border">
-            <div class="panel-body">
+            <div class="panel-body-signup">
 
               <form action="" method="post" class="form-horizontal">
                 <div class="form-group">

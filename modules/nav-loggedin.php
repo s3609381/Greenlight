@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/index.php"><img src="/images/LogoGreen.png" height="25" width="25"/></a>
+      <a class="navbar-brand" href="/index.php"><img src="/images/green-light-logo_25x25.png" />REENLIGHT</a>
       <!-- placeholder - replace with logo -->
     </div>
 

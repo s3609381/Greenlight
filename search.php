@@ -74,7 +74,7 @@ session_start();
         <hr>
 
         <!-- footer -->
-        <?php include("modules/footer.php") ?>
+        <?php include("modules/footer-search.php") ?>
 
     </div>
     <!-- /contatiner -->

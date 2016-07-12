@@ -30,6 +30,15 @@ session_start();
   <script src="../js/dash-nav-js.js"></script>
   <script src="../js/bootstrap-colorselector.js"></script>
   <script src="../js/bootstrap-toggle.min.js"></script>
+  
+  <!-- opt-in for bootstrap tooltips because they are auto-off for performance reasons -->
+  <script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    
+  })
+  </script>
+  
 </head>
 
 <body>
@@ -66,22 +75,22 @@ session_start();
             
              <form action="" method="post" class="form-horizontal">
                 <div class="form-group">
-                  <label for="lightName" class="col-sm-2 control-label">Name</label>
-                  <div class="col-sm-10">
+                  <label for="lightName" class="col-sm-3 control-label">Name</label>
+                  <div class="col-sm-9">
                     <input type="text" class="form-control" id="lightName" placeholder="Name" name="lightname" required>
                   </div>
                 </div>
                 
                 <div class="form-group">
-                  <label for="lightDesc" class="col-sm-2 control-label">Description</label>
-                  <div class="col-sm-10">
-                    <textarea class="form-control" rows="4" id="lightDesc" placeholder="Description" name="lightdesc" required></textarea>
+                  <label for="lightDesc" class="col-sm-3 control-label">Description</label>
+                  <div class="col-sm-9">
+                    <textarea class="form-control" rows="4" id="lightDesc" placeholder="Description" name="lightdesc" max-length="254" required></textarea>
                   </div>
                 </div>
                 
                 <div class="form-group">
-                  <label for="colorselector" class="col-sm-2 control-label">Colour</label>
-                  <div class="col-sm-10">
+                  <label for="colorselector" class="col-sm-3 control-label">Colour</label>
+                  <div class="col-sm-9">
                 
                     <select id="colorselector">
                       <option value="#5CB85C" data-color="#5CB85C" selected="selected"></option>
@@ -90,6 +99,7 @@ session_start();
                       <option value="#DC143C" data-color="#DC143C"></option>
                       <option value="#FF8C00" data-color="#FF8C00"></option>
                       <option value="#C71585" data-color="#C71585"></option>
+                      <!-- add more colours -->
                       </select>
                       
                     <script>
@@ -100,18 +110,18 @@ session_start();
                 </div>
                 
                 <div class="form-group">
-                  <label for="state" class="col-sm-2 control-label">State</label>
-                  <div class="col-sm-10">
+                  <label for="state" class="col-sm-3 control-label">Initial State <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Choose whether your light will initialise as on or off."></span></label>
+                  <div class="col-sm-9">
                     <div class="checkbox">
                   <label>
-                    <input id="state" type="checkbox" checked data-toggle="toggle" data-onstyle="success">
+                    <input id="state" type="checkbox" data-toggle="toggle" data-onstyle="success">
                   </label>
                     </div>
                   </div>
                 </div>
                 
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
+                  <div class="col-sm-offset-3 col-sm-9">
                     <div class="checkbox">
                   <label>
                     <input type="checkbox"> Public
@@ -121,7 +131,7 @@ session_start();
                 </div>
                 
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
+                  <div class="col-sm-offset-3 col-sm-9">
                     <input class="btn btn-success" type="submit" name='submit' value="Create" />
                   </div>
                 </div>

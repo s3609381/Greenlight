@@ -54,12 +54,18 @@ textarea {
   font-weight: bold;
 }
 
+/* this is used as the 'greenlight' until our actual graphic is ready */
 .temp-greenlight{
-  
-  width: 20px;
-  height: 20px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
   border: 1px solid #000;
   background-color: #5cb85c;
+}
+
+.tooltip-inner {
+    white-space:pre;
+    max-width:none;
 }
 
 /* note for steph from steph: remove border radius from buttons */
@@ -107,11 +113,17 @@ li> a:active {
 }
 
 .navbar-gl .navbar-brand {
-  color: #000;
+  color: #e1e1e1;
+  font-size: 1.32em;
+  font-weight: bold;
 }
 
 .navbar-gl .navbar-brand:hover {
   color: #5cb85c;
+}
+
+.panel-body-signup {
+  padding: 0px;
 }
 
 
@@ -122,6 +134,12 @@ li> a:active {
   color: #5cb85c;
   box-shadow: inset 0px 0px 0px #fff;
 }
+
+.navbar-brand > img {
+  display: inline;
+}
+
+
 
 
 /**********/
