@@ -1,19 +1,8 @@
 <!DOCTYPE html>
 
-<?php
-session_start();
-?> 
-
-
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Greenlight">
-    <meta name="author" content=";DROP TABLE team - RMIT University">
-
     <!-- favicons -->
   <link rel="shortcut icon" href="/images/favicon/favicon.ico">
   <link rel="icon" sizes="16x16 32x32 64x64" href="/images/favicon/favicon.ico">
@@ -36,7 +25,7 @@ session_start();
   <meta name="msapplication-TileImage" content="/images/favicon/favicon-144.png">
   <meta name="msapplication-config" content="/browserconfig.xml">
 
-    <title>Greenlight</title>
+    <title>Steph Testing Stuff</title>
 
     <!-- css -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -45,57 +34,29 @@ session_start();
     <!-- js / jquery -->
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-
+    <script src="js/dash-nav-js.js"></script>
 </head>
 
 <body>
-    <!-- nav bar + header -->
-    <?php
-  
-  if(!isset($_SESSION['user_name'])){ 
-    include("modules/nav.php");
-  }
-  else{
-    include("modules/nav-loggedin.php");
-  }
-  
-  ?>
+    
+<textarea id='text'></textarea>
+<div id='target'></div>
 
-    <!-- content and footer -->
-    <div class="container">
+<br/>
 
-        <!-- misc test content -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">
-                    Search
-                </h1>
-            </div>
-            <div class="col-md-12">
-                <div class="panel panel-no-border">
-                    <div class="panel-body">
-                        
-                        <!-- search functionality needs to be written -->
-                        
-                        <form class="form-inline" role="search">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-success">Submit</button>
-                        </form>
-                        
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
+<textarea id='text1'></textarea>
+<div id='target1'></div>
 
-        <!-- footer -->
-        <?php include("modules/footer-search.php") ?>
+<script type="text/javascript">
 
-    </div>
-    <!-- /contatiner -->
+$('#text').keyup(function() {
+    var keyed = $(this).val().replace(/\n/g, '<br/>');
+    $("#target").html(keyed);
+});
+
+</script>
+
+
 </body>
 
 </html>
