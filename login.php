@@ -7,13 +7,14 @@
 		$errMsg = '';
 		//username and password sent from Form
 		$username = trim($_POST['username']);
+		$email = trim($_POST['email']);
 		$password = trim($_POST['password']);
 		if($username == '')
 			$errMsg .= 'You must enter your Username<br>';
 		if($password == '')
 			$errMsg .= 'You must enter your Password<br>';
 		if($errMsg == ''){
-			$records = $db->prepare("SELECT * FROM tblUsers WHERE (Email = :email OR UserName = :username) AND Password = :password ");
+			$records = $db->prepare("SELECT * FROM tblUsers WHERE (Email = :email OR UserName = :username) AND Password = :password AND Active = 1");
 			$records->bindParam(':email', $username);
 			$records->bindParam(':username', $username);
 			$records->bindParam(':password', $password);
@@ -93,15 +94,15 @@
 
               <form action="" method="post" class="form-horizontal">
                 <div class="form-group">
-                  <label for="inputUsername" class="col-sm-2 control-label">Username / Email</label>
-                  <div class="col-sm-10">
+                  <label for="inputUsername" class="col-sm-4 control-label">Username / Email</label>
+                  <div class="col-sm-8">
                     <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
                   </div>
                 </div>
                 
                 <div class="form-group">
-                  <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-                  <div class="col-sm-10">
+                  <label for="inputPassword" class="col-sm-4 control-label">Password</label>
+                  <div class="col-sm-8">
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
                   </div>
                 </div>
@@ -122,7 +123,7 @@
                  -->
                  
                 <div class="form-group">
-                  <div class="col-sm-offset-2 col-sm-10">
+                  <div class="col-sm-offset-4 col-sm-10">
                     <input class="btn btn-success" type="submit" name='submit' value="Login" />
                   </div>
                 </div>

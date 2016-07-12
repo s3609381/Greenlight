@@ -17,28 +17,25 @@
     <script src="js/jquery-2.2.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/dash-nav-js.js"></script>
-   
-
-	
-
 </head>
 
 <body>
     
-  <form id="div_builder">
-   <input type="text" class="changeD" id="width"/>
-   <input type="text" class="changeD" id="height"/>
-   </form>
-   
-<div id="test" style="background-color:red">hello</div>
+<textarea id='text'></textarea>
+<div id='target'></div>
+
+<br/>
+
+<textarea id='text1'></textarea>
+<div id='target1'></div>
 
 <script type="text/javascript">
-$(".changeD").keyup (function () {
-var theval = Number($(this).val());
-if(!isNaN(theval)){
-$("#test").css( this.id, theval);
-}
+
+$('#text').keyup(function() {
+    var keyed = $(this).val().replace(/\n/g, '<br/>');
+    $("#target").html(keyed);
 });
+
 </script>
 
 
