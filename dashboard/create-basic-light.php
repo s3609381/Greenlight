@@ -2,6 +2,74 @@
 
 <?php
 session_start();
+include('../config.php');
+
+if(isset($_POST['submit'])){
+  $errMsg = '';
+  
+  // Get all the form data and assign them to variables for easy use
+  $lightName = trim($_POST['lightname']);
+  $lightDesc = trim($_POST['lightdesc']);
+  $lightColour = trim($_POST['lightclr']);
+  $lightState = trim($_POST['lightstate']);
+  $lightPublic = trim($_POST['lightpublic']);
+  $userID = $_SESSION['user_id'];
+  
+  // lightPublic and lightState are 'on' if checked and have no value if unchecked, check if they have values then set them accordingly. 
+  if($lightState==''){
+    // initialise light to off
+    $lightState = 0;
+  }
+  else{
+    // initialise light to on
+    $lightState = 1;
+  }
+  
+  if($lightPublic==''){
+    // initialise light to private
+    $lightPublic = 0;
+  }
+  else{
+    //initialise light to public
+    $lightPublic = 1;
+  }
+
+  // Get the ColourID I need from the database 
+  $tblLightColourRecords = $db->prepare("SELECT ColourID FROM tblLightColour WHERE HexValue = :lightColour");
+  $tblLightColourRecords->bindParam(':lightColour', $lightColour);
+  $tblLightColourRecords->execute();
+  $tblLightColourResults = $tblLightColourRecords->fetch(PDO::FETCH_ASSOC);
+
+  $lightColour = $tblLightColourResults['ColourID'];
+  
+  try{
+    echo $lightPublic."<br/><br/>";
+    $newLightQuery = $db->prepare("INSERT INTO tblLights(UserID, TriggerTypeName, TriggerValuesID, ColourID, LightType, Public, State, GroupLight, InviteAllowed, PostToSocialMedia, LightSocialMediaID, Reoccurrence, LightDeleted, Description, LightTitle) VALUES (:userID, 5, NULL, :colourID, 0, :public, :state, 0, 1, 0, NULL, 0, 0, :description, :title)");
+    $newLightQuery->bindParam(':userID', $userID);
+    $newLightQuery->bindParam(':colourID', $lightColour);
+    $newLightQuery->bindParam(':public', $lightPublic, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':state', $lightState, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':description', $lightDesc);
+    $newLightQuery->bindParam(':title', $lightName);
+    
+    $newLightQuery->execute();
+    
+  }
+  catch (PDOException $e){
+    if ($e->getCode() == 1062) {
+      // dont think you can get this exception with this form but better to be safe
+      $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error. 
+    }
+    else{
+      throw $e; //TODO
+    }
+    
+  }
+  
+  // STEPH TODO after execution, get the lightID of the newly inserted light (if successful) and redirect to the lights/newlightID page. 
+  
+}
+
 ?>
 
 <html lang="en">
@@ -75,7 +143,13 @@ session_start();
   ?>
   
   <!-- content and footer -->
-  <div class="container">    
+  <div class="container"> 
+  
+  <?php
+      if(isset($errMsg)){
+        echo '<div style="color:#FF0000;text-align:center;font-size:12px;">'.$errMsg.'</div>';
+      }
+    ?>
     
     <div class="row">
         
@@ -110,7 +184,7 @@ session_start();
                   <label for="colorselector" class="col-sm-3 control-label">Colour</label>
                   <div class="col-sm-9">
                 
-                    <select id="colorselector">
+                    <select id="colorselector" name="lightclr">
                       <option value="#5CB85C" data-color="#5CB85C" selected="selected"></option>
                       <option value="#A0522D" data-color="#A0522D"></option>
                       <option value="#FF4500" data-color="#FF4500"></option>
@@ -132,7 +206,7 @@ session_start();
                   <div class="col-sm-9">
                     <div class="checkbox">
                   <label>
-                    <input id="state" type="checkbox" data-toggle="toggle" data-onstyle="success">
+                    <input id="state" type="checkbox" data-toggle="toggle" data-onstyle="success" name="lightstate">
                   </label>
                     </div>
                   </div>
@@ -142,7 +216,7 @@ session_start();
                   <div class="col-sm-offset-3 col-sm-9">
                     <div class="checkbox">
                   <label>
-                    <input type="checkbox"> Public
+                    <input type="checkbox" name="lightpublic"> Public
                   </label>
                     </div>
                   </div>

@@ -32,3 +32,46 @@ Stack trace:
 [09-Jul-2016 00:43:02 UTC] PHP Warning:  include(): Failed opening 'modules/footer.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/error/404.php on line 69
 [09-Jul-2016 00:43:02 UTC] PHP Stack trace:
 [09-Jul-2016 00:43:02 UTC] PHP   1. {main}() /home/ubuntu/workspace/error/404.php:0
+[13-Jul-2016 11:02:22 UTC] PHP Parse error:  syntax error, unexpected ')' in /home/ubuntu/workspace/lights/lights.php on line 24
+[13-Jul-2016 11:02:47 UTC] PHP Warning:  include(config.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/lights/lights.php on line 10
+[13-Jul-2016 11:02:47 UTC] PHP Stack trace:
+[13-Jul-2016 11:02:47 UTC] PHP   1. {main}() /home/ubuntu/workspace/lights/lights.php:0
+[13-Jul-2016 11:02:47 UTC] PHP Warning:  include(): Failed opening 'config.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/lights/lights.php on line 10
+[13-Jul-2016 11:02:47 UTC] PHP Stack trace:
+[13-Jul-2016 11:02:47 UTC] PHP   1. {main}() /home/ubuntu/workspace/lights/lights.php:0
+[13-Jul-2016 11:02:47 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/lights/lights.php on line 14
+[13-Jul-2016 11:02:47 UTC] PHP Stack trace:
+[13-Jul-2016 11:02:47 UTC] PHP   1. {main}() /home/ubuntu/workspace/lights/lights.php:0
+[13-Jul-2016 11:02:57 UTC] PHP Fatal error:  Cannot use object of type PDOStatement as array in /home/ubuntu/workspace/lights/lights.php on line 23
+[13-Jul-2016 11:02:57 UTC] PHP Stack trace:
+[13-Jul-2016 11:02:57 UTC] PHP   1. {main}() /home/ubuntu/workspace/lights/lights.php:0
+[13-Jul-2016 11:03:33 UTC] PHP Fatal error:  Cannot use object of type PDOStatement as array in /home/ubuntu/workspace/lights/lights.php on line 22
+[13-Jul-2016 11:03:33 UTC] PHP Stack trace:
+[13-Jul-2016 11:03:33 UTC] PHP   1. {main}() /home/ubuntu/workspace/lights/lights.php:0
+[13-Jul-2016 11:05:40 UTC] PHP Fatal error:  Cannot use object of type PDOStatement as array in /home/ubuntu/workspace/lights/lights.php on line 22
+[13-Jul-2016 11:05:40 UTC] PHP Stack trace:
+[13-Jul-2016 11:05:40 UTC] PHP   1. {main}() /home/ubuntu/workspace/lights/lights.php:0
+[13-Jul-2016 11:05:44 UTC] PHP Fatal error:  Cannot use object of type PDOStatement as array in /home/ubuntu/workspace/lights/lights.php on line 22
+[13-Jul-2016 11:05:44 UTC] PHP Stack trace:
+[13-Jul-2016 11:05:44 UTC] PHP   1. {main}() /home/ubuntu/workspace/lights/lights.php:0
+[13-Jul-2016 11:05:56 UTC] PHP Fatal error:  Cannot use object of type PDOStatement as array in /home/ubuntu/workspace/lights/lights.php on line 22
+[13-Jul-2016 11:05:56 UTC] PHP Stack trace:
+[13-Jul-2016 11:05:56 UTC] PHP   1. {main}() /home/ubuntu/workspace/lights/lights.php:0
+[13-Jul-2016 12:05:53 UTC] PHP Fatal error:  Cannot use object of type PDOStatement as array in /home/ubuntu/workspace/dashboard/create-basic-light.php on line 19
+[13-Jul-2016 12:05:53 UTC] PHP Stack trace:
+[13-Jul-2016 12:05:53 UTC] PHP   1. {main}() /home/ubuntu/workspace/dashboard/create-basic-light.php:0
+[13-Jul-2016 12:09:18 UTC] PHP Parse error:  syntax error, unexpected '}', expecting ',' or ';' in /home/ubuntu/workspace/dashboard/create-basic-light.php on line 25
+[13-Jul-2016 12:33:35 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'Reoccurence' in 'field list'' in /home/ubuntu/workspace/dashboard/create-basic-light.php:55
+Stack trace:
+#0 /home/ubuntu/workspace/dashboard/create-basic-light.php(55): PDOStatement->execute()
+#1 {main}
+  thrown in /home/ubuntu/workspace/dashboard/create-basic-light.php on line 55
+[13-Jul-2016 12:41:31 UTC] PHP Catchable fatal error:  Object of class PDOStatement could not be converted to string in /home/ubuntu/workspace/dashboard/create-basic-light.php on line 56
+[13-Jul-2016 12:41:31 UTC] PHP Stack trace:
+[13-Jul-2016 12:41:31 UTC] PHP   1. {main}() /home/ubuntu/workspace/dashboard/create-basic-light.php:0
+[13-Jul-2016 12:42:41 UTC] PHP Catchable fatal error:  Object of class PDOStatement could not be converted to string in /home/ubuntu/workspace/dashboard/create-basic-light.php on line 56
+[13-Jul-2016 12:42:41 UTC] PHP Stack trace:
+[13-Jul-2016 12:42:41 UTC] PHP   1. {main}() /home/ubuntu/workspace/dashboard/create-basic-light.php:0
+[13-Jul-2016 12:42:53 UTC] PHP Catchable fatal error:  Object of class PDOStatement could not be converted to string in /home/ubuntu/workspace/dashboard/create-basic-light.php on line 56
+[13-Jul-2016 12:42:53 UTC] PHP Stack trace:
+[13-Jul-2016 12:42:53 UTC] PHP   1. {main}() /home/ubuntu/workspace/dashboard/create-basic-light.php:0
