@@ -8,7 +8,7 @@ Include in faq.php
 /*
 elements:
 */
-<script src="/js/faq.js"></script>
+<script src="/js/faq.php"></script>
 $(document).ready(function() {
     $('.nav-toggle').click(function() {
         //get collapse content selector
@@ -29,7 +29,6 @@ $(document).ready(function() {
     });
 
 });
-</script>
 /*
 Must also have the following added above each panel-body:
 */

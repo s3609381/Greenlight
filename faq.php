@@ -86,10 +86,10 @@ session_start();
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Question</h3>
+                        <h3 class="panel-title">How do I change my account details?</h3>
                     </div>
                     <div class="panel-body-hidden">
-                        Answer
+                        Nav bar >> user name >> settings. The dashboard also has an option button where settings can be changed.
                     </div>
                 </div>
 
