@@ -6,10 +6,9 @@
 if(isset($_SESSION['user_name'])){ 
     header("Location: dashboard.php");
   }
-  
-  
    include("config.php");
    session_start();
+   
  if(isset($_POST['submit'])){
 		$errMsg = '';
 		//username and password sent from Form
@@ -28,6 +27,12 @@ if(isset($_SESSION['user_name'])){
 			$records->execute();
 			$results = $records->fetch(PDO::FETCH_ASSOC);
 			if($results > 0){
+			  
+			  // set last login as the current time
+			  $lastLogin= $db->prepare("UPDATE tblUsers SET LastLogin= NOW() WHERE UserID=:userID");
+			  $lastLogin->bindParam(':userID', $results['UserID']);
+			  $lastLogin->execute();
+			  
 				$_SESSION['user_name'] = $results['UserName'];
 				$_SESSION['user_id'] = $results['UserID'];
 				$_SESSION['logged_in'] = TRUE;
