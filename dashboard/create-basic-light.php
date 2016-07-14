@@ -183,7 +183,7 @@ if(isset($_POST['submit'])){
                 <div class="form-group">
                   <label for="lightDesc" class="col-sm-3 control-label">Description</label>
                   <div class="col-sm-9">
-                    <textarea class="form-control" rows="4" id="lightDesc" placeholder="Description" name="lightdesc" max-length="254" required></textarea>
+                    <textarea class="form-control" rows="4" id="lightDesc" placeholder="Description" name="lightdesc" max-length="5" required></textarea>
                   </div>
                 </div>
                 
@@ -273,6 +273,24 @@ if(isset($_POST['submit'])){
               $(".temp-greenlight").css("background-color", slctdClr);
             });
             
+            // limit number of characters in the text area while typing and also on paste
+            $('textarea').on('paste keyup keydown', function(event) {
+              var element = this;
+              setTimeout(function() {
+                if ($(element).val().length > 254) {
+                  if (event.type == "paste") {
+                    $(element).val($(element).val().substr(0, 254))
+                  }
+                  else {
+                    $(element).val($(element).val().slice(0, -1));
+                  }
+                  alert("light description may only contain up to 255 characters.");
+                }
+                else {
+                  return true;
+                }
+              }, 100);
+            });
             </script>
             
           </div>
