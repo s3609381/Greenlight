@@ -1,14 +1,6 @@
 <?php
-// API in PHP example
-/*
-
-1. Ascertain if the user is allowed to access the API
-	1.1. If not, return 401 (Unauthorised)
-2. Direct request based on routing rules
-3. Perform request
-4. Return result
-
-To get here, load this into apache, make sure mod_rewrite is enabled, then navigate to <host>/api/users or <host>/api/configuration
+/** This is the Greenlight API Wrapper.
+ * It contains functions in information that allow users to securely acces the sites functions through a different presentaion (the API).
 */
 
 
@@ -18,14 +10,7 @@ if (!isset($_GET['url'])) {
     header("Location: login.php");
 }
 else {
-	// Include the SQL library provided
-	include('config.php');
-	
-	//Get the method (GET,POST,PATCH,PUT,DELETE)
-	$method = $_SERVER['REQUEST_METHOD'];
-	
-	echo "The request sent to this site was a <h1>$method</h1> request \n";
-	
+
 	// Get the redirected path from the $_GET collection 
 	// The request path will be everything past /api for example /api/login $requestpath = login
 	$requestPath = $_GET['url'];
@@ -43,7 +28,9 @@ else {
 	}
 }
 
+
 function parseLoginRequest() {
+	//Here we figure out what type of request the user sent and if its supported call the relevant function or return HTTP status code of 401
 	$method = $_SERVER['REQUEST_METHOD'];
 	switch ($method) {
 		case 'POST':
@@ -58,15 +45,16 @@ function parseLoginRequest() {
 
 function login()
 {
+	//Hands a POST request for /login
+	
+	//include the sql library
 	include('config.php');
 
-	echo "reached the login function \n";
-	$authenticated = false;
 	
 	//php://input = the body of a request sent to the site
-	
 	$input = json_decode(file_get_contents('php://input'),true);
 	
+	//get the username and password that the user provided in the request
 	$requestUser = $input['username'];
 	$requestPassword = $input['password'];
 	
@@ -97,29 +85,31 @@ function login()
 
 function insertSessionToken($userId, $token)
 {
+	//This function will insert a session token into the database
+	
+	//include the sql library
 	include('config.php');
 	
+	
+	//We need an australian timestamp for the session token
+	//Get the time as of now
 	$currentTime = new DateTime("now", new DateTimeZone('Australia/Melbourne') );
+	//Add 30 minutes to it
 	$currentTime->modify("+30 minutes");
+	//Turn it into a string
 	$sessionExpirationDateString = $currentTime->format('Y-m-d H:i:s');
-	$sessionExpirationDateString;
 
-	// need to catch an exception
+	//Now we try to insert the session token into the database.
 	try {
     	$query = $db->prepare("INSERT INTO tblSessions (SessionId, UserId, SocialMediaID, AuthenticationTime, SessionExpiration) VALUES (:token, :userId, NULL, NOW(), :sessionExpirationDate)");
 		$query->bindParam(':token', $token);
 		$query->bindParam(':userId', $userId);
 		$query->bindParam(':sessionExpirationDate', $sessionExpirationDateString);
 		$query->execute();
-	} catch (PDOException $e) {
-    	if ($e->getCode() == 1062) {
-        // Take some action if there is a key constraint violation, i.e. duplicate name
-        //1062 is a constraint error
-    	} else {
+		} 
+	catch (PDOException $e) {
         	throw $e;
     	}
-	}
-	echo "Success!";
 }
 
 function getLights() 
@@ -155,6 +145,32 @@ function createSessionToken($val){
       }
     return $pass;
     }
-    
+ 
+ function checkSession($requestSession){
+ 	include ('config.php');
+ 	
+ 		$records = $db->prepare("SELECT * FROM tblSessions WHERE SessionID = :session");
+		$records->bindParam(':session', $requestSession);
+		$records->execute();
+		$results = $records->fetch(PDO::FETCH_ASSOC);
+		if($results > 0){
+			$now = time();
+			$sessionExpiry = $results['SessionExpiration'];
+			
+			if($now < $sessionExpiry) {
+				return true;	
+			}
+			else {
+				echo 'Sorry the session you provided has expired. Please send a POST request to /login to get a new session.';
+				return false;
+			}
+		}
+		
+		else {
+			echo 'Sorry the session you provided does not exist. Please send a POST request to /login to get a new session.';
+			return false;
+		}
+ 	
+ }
     
  ?>
