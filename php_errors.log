@@ -75,3 +75,11 @@ Stack trace:
 [13-Jul-2016 12:42:53 UTC] PHP Catchable fatal error:  Object of class PDOStatement could not be converted to string in /home/ubuntu/workspace/dashboard/create-basic-light.php on line 56
 [13-Jul-2016 12:42:53 UTC] PHP Stack trace:
 [13-Jul-2016 12:42:53 UTC] PHP   1. {main}() /home/ubuntu/workspace/dashboard/create-basic-light.php:0
+[14-Jul-2016 12:18:54 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LAST_INSERT_ID()' at line 1' in /home/ubuntu/workspace/dashboard/create-basic-light.php:74
+Stack trace:
+#0 /home/ubuntu/workspace/dashboard/create-basic-light.php(74): PDOStatement->execute()
+#1 {main}
+  thrown in /home/ubuntu/workspace/dashboard/create-basic-light.php on line 74
+[14-Jul-2016 12:19:39 UTC] PHP Catchable fatal error:  Object of class PDOStatement could not be converted to string in /home/ubuntu/workspace/dashboard/create-basic-light.php on line 76
+[14-Jul-2016 12:19:39 UTC] PHP Stack trace:
+[14-Jul-2016 12:19:39 UTC] PHP   1. {main}() /home/ubuntu/workspace/dashboard/create-basic-light.php:0

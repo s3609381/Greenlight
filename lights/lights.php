@@ -54,3 +54,5 @@ else{
 }
 
 ?>
+
+<h2><a href = "/dashboard.php">Back to Dashboard</a></h2>

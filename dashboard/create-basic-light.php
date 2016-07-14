@@ -43,7 +43,6 @@ if(isset($_POST['submit'])){
   $lightColour = $tblLightColourResults['ColourID'];
   
   try{
-    echo $lightPublic."<br/><br/>";
     $newLightQuery = $db->prepare("INSERT INTO tblLights(UserID, TriggerTypeName, TriggerValuesID, ColourID, LightType, Public, State, GroupLight, InviteAllowed, PostToSocialMedia, LightSocialMediaID, Reoccurrence, LightDeleted, Description, LightTitle) VALUES (:userID, 5, NULL, :colourID, 0, :public, :state, 0, 1, 0, NULL, 0, 0, :description, :title)");
     $newLightQuery->bindParam(':userID', $userID);
     $newLightQuery->bindParam(':colourID', $lightColour);
@@ -51,8 +50,11 @@ if(isset($_POST['submit'])){
     $newLightQuery->bindParam(':state', $lightState, PDO::PARAM_INT);
     $newLightQuery->bindParam(':description', $lightDesc);
     $newLightQuery->bindParam(':title', $lightName);
-    
     $newLightQuery->execute();
+    
+    //Get the new ID for the light as it is an auto increment field
+    $newLightId = $db->lastInsertId();
+    $insertSuccess=true;
     
   }
   catch (PDOException $e){
@@ -66,7 +68,12 @@ if(isset($_POST['submit'])){
     
   }
   
-  // STEPH TODO after execution, get the lightID of the newly inserted light (if successful) and redirect to the lights/newlightID page. 
+  if(insertSuccess){
+    // redirect the user to the newly created lights' page
+    header("Location: ../lights/".$newLightId);
+  }
+  
+  
   
 }
 
@@ -225,6 +232,7 @@ if(isset($_POST['submit'])){
                 <div class="form-group">
                   <div class="col-sm-offset-3 col-sm-9">
                     <input class="btn btn-success" type="submit" name='submit' value="Create" />
+                    <input class="btn btn-default" type="button" name='cancel' value="Cancel" onclick="window.location='/dashboard.php';" />
                   </div>
                 </div>
           
