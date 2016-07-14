@@ -11,6 +11,9 @@ if (!isset($_GET['url'])) {
 }
 else {
 
+	echo 'Welcome to the greenlight API.';
+	echo 'please post to /login to get a session ID \n';
+	
 	// Get the redirected path from the $_GET collection 
 	// The request path will be everything past /api for example /api/login $requestpath = login
 	$requestPath = $_GET['url'];
@@ -20,7 +23,7 @@ else {
 			parseLoginRequest();
 			break;
 		case 'lights':
-			getLights();
+			parseLightRequest();
 			break;
 		default:
 			processError(404);
@@ -30,7 +33,7 @@ else {
 
 
 function parseLoginRequest() {
-	//Here we figure out what type of request the user sent and if its supported call the relevant function or return HTTP status code of 401
+	//Here we figure out what type of request the user sent and if its supported call the relevant function or return HTTP status code of 401 (Unauthorised)
 	$method = $_SERVER['REQUEST_METHOD'];
 	switch ($method) {
 		case 'POST':
@@ -42,6 +45,28 @@ function parseLoginRequest() {
 	}	
 
 }
+
+function parseLightRequest() {
+	//Here we figure out what type of request the user sent and if its supported call the relevant function or return HTTP status code of 405 (Method not allowed)
+	$method = $_SERVER['REQUEST_METHOD'];
+	switch ($method) {
+		case 'POST':
+			createLight();
+			break;
+		case 'GET':
+			getLight();
+		case 'DELETE':
+			deleteLight();
+			break;
+		case 'PATCH':
+			patchLight();
+			break;
+		default:
+			http_response_code(405);
+			break;
+	}	
+}
+
 
 function login()
 {
@@ -111,6 +136,40 @@ function insertSessionToken($userId, $token)
         	throw $e;
     	}
 }
+
+function createLight(){
+	//include the sql library
+	include('config.php');
+	
+	//php://input = the body of a request sent to the site
+	$input = json_decode(file_get_contents('php://input'),true);
+	
+	foreach($input as $key=>$value)
+	{
+    	$key=$value;
+	}
+	
+	//If sessionID is empty reject the request.
+	if($sessionID = '') {
+			echo "Please POST to the /login resource to recieve a sessionID";
+			http_response_code(401);
+			return;
+	}
+	// Should do a check here to see if a sessionId has been provided in the request.
+	if (checkSession($sessionID == true)){
+		if ($lightType == 'Basic' || $lightType == 'BASIC');
+			
+			//build the pdo statement
+			
+		
+	}
+	else {
+		//exit the function
+		return;
+	}
+
+}
+
 
 function getLights() 
 	// Should do a check here to see if a sessionId has been provided in the request.
