@@ -14,7 +14,7 @@ echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
    </head>
    
    <body>
-<h2><a href = "dashboard.php">Back to Dashboard</a></h2>
+<h2><a href = "/dashboard">Back to Dashboard</a></h2>
  </body>
    
 </html>

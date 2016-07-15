@@ -3,8 +3,17 @@
 <?php
 session_start();
 if(!isset($_SESSION['user_name'])){ //if login in session is not set
-  header("Location: login.php");
+  header("Location: ../login");
 }
+
+include('../config.php');
+
+$userId = $_SESSION['user_id'];
+
+$lights = $db->prepare("SELECT * FROM tblLights WHERE UserID = :userId");
+    $lights->bindParam(':userId', $userId);
+    $lights->execute();
+    $lightResults = $lights->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <html lang="en">
@@ -41,13 +50,13 @@ if(!isset($_SESSION['user_name'])){ //if login in session is not set
   <title>Greenlight - Dashboard</title>
   
   <!-- css -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
   
   <!-- js / jquery -->
-  <script src="js/jquery-2.2.4.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/dash-nav-js.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/dash-nav-js.js"></script>
 
   
 </head>
@@ -58,10 +67,10 @@ if(!isset($_SESSION['user_name'])){ //if login in session is not set
   <?php
   
   if(!isset($_SESSION['user_name'])){ 
-    include("modules/nav.php");
+    include("../modules/nav.php");
   }
   else{
-    include("modules/nav-loggedin.php");
+    include("../modules/nav-loggedin.php");
   }
   
   ?>
@@ -76,20 +85,74 @@ if(!isset($_SESSION['user_name'])){ //if login in session is not set
           </h1>
       </div>
      
-     <?php include("modules/dash-nav.php"); ?> 
-      
-      
-      <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4>Lights</h4>
+     <?php include("../modules/dash-nav.php"); ?>
+     
+     <div class='col-md-6'>
+       <div class='panel-heading'>Lights</div>
+     
+     <?php
+     
+     foreach($lightResults as $lights){
+       
+       // get corresponding hex value for the colour id of the light.
+       $lightColour = $db->prepare("SELECT * FROM tblLightColour WHERE ColourID = :colourId");
+       $lightColour->bindParam(':colourId', $lights['ColourID']);
+       $lightColour->execute();
+       $hexCode = $lightColour->fetch(PDO::FETCH_ASSOC);
+       
+       $lightUrl = "https://greenlight-drop-table-team-hypnotik.c9users.io/lights/".$lights['LightID'];
+       
+       $bgColour = $hexCode['HexValue'];
+       
+       if($lights['State']==0){
+         $bgColour = "#7E7E7E";
+       }
+       
+       // the background colour of the lights change inline here. (dont really know how it's going to work when we have a graphic for the lights.)
+       echo "
+              
+        <div class='panel panel-default' style='padding-left: 10px; padding-right: 10px'; padding-bottom:10px'>
+        
+          <div class='row'>
+            <div class='panel-body'>
+              <div class='col-md-2 temp-greenlight' style='background: ".$bgColour."';'>
+              </div>
+              <div class='col-md-10'>
+                <b><a href='/lights/".$lights['LightID']."'>".$lights['LightTitle']."</a></b>
+                <p>
+                  <small>".$lights['Description']."</small>
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="panel-body">
-            <p>Lights</p>
             
+             <div class='row'>
+               <div class='col-md-12'>
+                 <span class='pull-right'>Share | Edit</span>
+               </div>
+             </div>
+            
+             <div class='row' style='margin-bottom:10px; display: none'>
+               <div class='col-md-12'>
+                 <div class='input-group'>
+                   <input type='text' class='form-control' placeholder='".$lightUrl."'>
+                   <span class='input-group-btn'>
+                   <button class='btn btn-secondary' type='button'>Copy</button>
+                   </span>
+                 </div>
+               </div>
+             </div>
           </div>
+          
+          ";
+            
+            }
+            
+            ?>
+            
         </div>
-      </div>
+          
+        
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -106,7 +169,7 @@ if(!isset($_SESSION['user_name'])){ //if login in session is not set
     <hr>
     
     <!-- footer -->
-    <?php include("modules/footer.php") ?>
+    <?php include("../modules/footer.php") ?>
     
   </div>
   <!-- /contatiner -->

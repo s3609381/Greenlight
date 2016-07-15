@@ -4,9 +4,9 @@
 
 // redirect already logged in users back to the dashboard if they somehow end up back on the login page while logged in.
 if(isset($_SESSION['user_name'])){ 
-    header("Location: dashboard.php");
+    header("Location: ../dashboard");
   }
-   include("config.php");
+   include("../config.php");
    session_start();
    
  if(isset($_POST['submit'])){
@@ -37,7 +37,7 @@ if(isset($_SESSION['user_name'])){
 				$_SESSION['user_id'] = $results['UserID'];
 				$_SESSION['logged_in'] = TRUE;
 				
-				header('location:dashboard.php');
+				header('location:../dashboard');
 				exit;
 			}else{
 				$errMsg .= 'Incorrect username or password.<br>';
@@ -80,12 +80,12 @@ if(isset($_SESSION['user_name'])){
   <title>Greenlight - Login</title>
 
   <!-- css -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
 
   <!-- js / jquery -->
-  <script src="js/jquery-2.2.4.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -94,10 +94,10 @@ if(isset($_SESSION['user_name'])){
   <?php
   
   if(!isset($_SESSION['user_name'])){ 
-    include("modules/nav.php");
+    include("../modules/nav.php");
   }
   else{
-    include("modules/nav-loggedin.php");
+    include("../modules/nav-loggedin.php");
   }
   
   ?>
@@ -166,7 +166,7 @@ if(isset($_SESSION['user_name'])){
       <hr>
 
       <!-- footer -->
-      <?php include("modules/footer.php") ?>
+      <?php include("../modules/footer.php") ?>
 
   </div>
   <!-- /contatiner -->

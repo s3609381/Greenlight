@@ -38,13 +38,13 @@ session_start();
     <title>Greenlight - FAQ</title>
 
     <!-- css -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 
     <!-- js / jquery -->
-    <script src="js/jquery-2.2.4.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/faq.js"></script>
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/faq.js"></script>
 
 </head>
 
@@ -53,10 +53,10 @@ session_start();
     <?php
   
   if(!isset($_SESSION['user_name'])){ 
-    include("modules/nav.php");
+    include("../modules/nav.php");
   }
   else{
-    include("modules/nav-loggedin.php");
+    include("../modules/nav-loggedin.php");
   }
   
   ?>
@@ -89,7 +89,7 @@ session_start();
                         <h3 class="panel-title">How do I change my account details?</h3>
                     </div>
                     <div class="panel-body-hidden">
-                        Nav bar >> user name >> settings. The dashboard also has an option button where settings can be changed.
+                        When you are logged in, go to the Navagation Bar at the top of the screen then to 'user name -> settings'. The dashboard also has an option button where settings can be changed.
                     </div>
                 </div>
 
@@ -107,7 +107,7 @@ session_start();
         <hr>
 
         <!-- footer -->
-        <?php include("modules/footer.php") ?>
+        <?php include("../modules/footer.php") ?>
 
     </div>
     <!-- /contatiner -->

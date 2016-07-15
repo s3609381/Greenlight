@@ -2,7 +2,7 @@
 
 <?php
 session_start();
-include('../config.php');
+include('../../config.php');
 
 if(isset($_POST['submit'])){
   $errMsg = '';
@@ -70,7 +70,7 @@ if(isset($_POST['submit'])){
   
   if(insertSuccess){
     // redirect the user to the newly created lights' page
-    header("Location: ../lights/".$newLightId);
+    header("Location: ../../lights/".$newLightId);
   }
   
   
@@ -113,16 +113,16 @@ if(isset($_POST['submit'])){
   <title>Greenlight - Dashboard - Create Basic Light</title>
   
   <!-- css -->
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <link href="../css/style.css" rel="stylesheet">
-  <link href="../css/bootstrap-colorselector.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/bootstrap-colorselector.css" rel="stylesheet">
   
   <!-- js / jquery -->
-  <script src="../js/jquery-2.2.4.min.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
-  <script src="../js/dash-nav-js.js"></script>
-  <script src="../js/bootstrap-colorselector.js"></script>
-  <script src="../js/bootstrap-toggle.min.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/dash-nav-js.js"></script>
+  <script src="/js/bootstrap-colorselector.js"></script>
+  <script src="/js/bootstrap-toggle.min.js"></script>
   
   <!-- opt-in for bootstrap tooltips because they are auto-off for performance reasons -->
   <script>
@@ -141,10 +141,10 @@ if(isset($_POST['submit'])){
   <?php
   
   if(!isset($_SESSION['user_name'])){ 
-    include("../modules/nav.php");
+    include("../../modules/nav.php");
   }
   else{
-    include("../modules/nav-loggedin.php");
+    include("../../modules/nav-loggedin.php");
   }
   
   ?>
@@ -166,7 +166,7 @@ if(isset($_POST['submit'])){
         </h1>
       </div>
       
-      <?php include("../modules/dash-nav.php"); ?>
+      <?php include("../../modules/dash-nav.php"); ?>
       
       <div class="col-md-6">
         <div class="panel panel-default">
@@ -302,7 +302,7 @@ if(isset($_POST['submit'])){
     <hr>
     
     <!-- footer -->
-    <?php include("../modules/footer.php") ?>
+    <?php include("../../modules/footer.php") ?>
     
   </div>
   <!-- /contatiner -->

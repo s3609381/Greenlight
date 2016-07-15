@@ -17,13 +17,13 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <a href="/about.php">ABOUT</a>
+          <a href="/about">ABOUT</a>
         </li>
         <li>
-          <a href="/faq.php">FAQ</a>
+          <a href="/faq">FAQ</a>
         </li>
         <li>
-          <a href="/search.php">SEARCH</a>
+          <a href="/search">SEARCH</a>
         </li>
 
         <!-- if logged in: -->
@@ -31,7 +31,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $_SESSION['user_name']; ?><b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li>
-              <a href="/dashboard.php">Dashboard</a>
+              <a href="/dashboard">Dashboard</a>
             </li>
             <li>
               <a href="">Settings</a>

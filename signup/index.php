@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <?php
-  include("config.php");
+  include("../config.php");
   session_start();
 
 if(isset($_POST['signup'])){   
@@ -114,7 +114,7 @@ if(isset($_POST['signup'])){
     			try{
     			  $details->execute();
     			
-    			  header('location:dashboard.php');
+    			  header('location:../dashboard');
     			  exit;
     			}
     			catch(PDOException $e){
@@ -197,19 +197,19 @@ if(isset($_POST['signup'])){
   <title>Greenlight - Sign Up</title>
 
   <!-- css -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
 
   <!-- js / jquery -->
-  <script src="js/jquery-2.2.4.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="/js/jquery-2.2.4.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 
 </head>
 
 <body>
   <!-- nav bar + header -->
   
-  <?php include("modules/nav.php"); ?>
+  <?php include("../modules/nav.php"); ?>
 
   <!-- content and footer -->
   <div class="container">
@@ -285,7 +285,7 @@ if(isset($_POST['signup'])){
       <hr>
 
       <!-- footer -->
-      <?php include("modules/footer.php") ?>
+      <?php include("../modules/footer.php") ?>
 
   </div>
   <!-- /contatiner -->

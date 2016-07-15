@@ -39,12 +39,12 @@ session_start();
     <title>Greenlight</title>
 
     <!-- css -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 
     <!-- js / jquery -->
-    <script src="js/jquery-2.2.4.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -53,10 +53,10 @@ session_start();
     <?php
   
   if(!isset($_SESSION['user_name'])){ 
-    include("modules/nav.php");
+    include("../modules/nav.php");
   }
   else{
-    include("modules/nav-loggedin.php");
+    include("../modules/nav-loggedin.php");
   }
   
   ?>
@@ -92,7 +92,7 @@ session_start();
         <hr>
 
         <!-- footer -->
-        <?php include("modules/footer-search.php") ?>
+        <?php include("../modules/footer-search.php") ?>
 
     </div>
     <!-- /contatiner -->
