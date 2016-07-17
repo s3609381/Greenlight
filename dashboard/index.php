@@ -120,7 +120,7 @@ $lights = $db->prepare("SELECT * FROM tblLights WHERE UserID = :userId");
               <div class='col-md-10'>
                 <b><a href='/lights/".$lights['LightID']."'>".$lights['LightTitle']."</a></b>
                 <p>
-                  <small>".$lights['Description']."</small>
+                  <small>".nl2br($lights['Description'])."</small>
                 </p>
               </div>
             </div>
@@ -132,10 +132,10 @@ $lights = $db->prepare("SELECT * FROM tblLights WHERE UserID = :userId");
                </div>
              </div>
             
-             <div class='row' style='margin-bottom:10px; display: none'>
+             <div class='row' style='margin-bottom:10px; '>
                <div class='col-md-12'>
                  <div class='input-group'>
-                   <input type='text' class='form-control' placeholder='".$lightUrl."'>
+                   <input type='text' class='form-control' value='".$lightUrl."' readonly>
                    <span class='input-group-btn'>
                    <button class='btn btn-secondary' type='button'>Copy</button>
                    </span>

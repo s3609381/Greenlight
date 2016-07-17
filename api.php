@@ -12,7 +12,7 @@ if (!isset($_GET['url'])) {
 else {
 
 	echo 'Welcome to the greenlight API.';
-	echo 'please post to /login to get a session ID \n';
+	echo "please post to /login to get a session ID \n";
 	
 	// Get the redirected path from the $_GET collection 
 	// The request path will be everything past /api for example /api/login $requestpath = login
@@ -144,22 +144,72 @@ function createLight(){
 	//php://input = the body of a request sent to the site
 	$input = json_decode(file_get_contents('php://input'),true);
 	
-	foreach($input as $key=>$value)
-	{
-    	$key=$value;
-	}
+	$requestName =  $input['name'];
+	$requestLightType =  $input['lightType'];
+	$requestColourType =  $input['colourId'];
+	$requestState =  $input['state'];
+	$requestGroupLight =  $input['groupLight'];
+	$requestInviteAllowed =  $input['inviteAllowed'];
+	$requestPostToSocialMedia =  $input['postToSocialMedia'];
+	$requestLightSocialMedia =  $input['lightSocialMedia'];
+	$requestSessionId =  $input['sessionId'];
 	
-	//If sessionID is empty reject the request.
-	if($sessionID = '') {
-			echo "Please POST to the /login resource to recieve a sessionID";
+	//If sessionId is empty reject the request.
+	if($requestSessionId == NULL) {
+			echo "Session ID is empty Please POST to the /login resource to recieve a sessionID";
 			http_response_code(401);
 			return;
 	}
+	
+	$userId = checkSession($requestSessionId);
 	// Should do a check here to see if a sessionId has been provided in the request.
-	if (checkSession($sessionID == true)){
-		if ($lightType == 'Basic' || $lightType == 'BASIC');
+	if ($userId > 0){
+		if ($requestLightType == 'Basic' || $requestLightType == 'BASIC');
+			echo "do PDO stuff \n";
+			
+			
 			
 			//build the pdo statement
+	/**************************************************
+
+ 
+  
+  try{
+    $newLightQuery = $db->prepare("INSERT INTO tblLights(UserID, TriggerTypeName, TriggerValuesID, ColourID, LightType, Public, State, GroupLight, InviteAllowed, PostToSocialMedia, LightSocialMediaID, Reoccurrence, LightDeleted, Description, LightTitle)
+    VALUES (:userID, 5, NULL, :colourID, 0, :public, :state, 0, 1, 0, NULL, 0, 0, :description, :title)");
+    $newLightQuery->bindParam(':userID', $userID);
+    $newLightQuery->bindParam(':colourID', $requestColourType);
+    $newLightQuery->bindParam(':public', $lightPublic, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':state', $lightState, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':description', $lightDesc);
+    $newLightQuery->bindParam(':title', $lightName);
+    $newLightQuery->execute();
+    
+    //Get the new ID for the light as it is an auto increment field
+    $newLightId = $db->lastInsertId();
+    $insertSuccess=true;
+    
+  }
+  catch (PDOException $e){
+    if ($e->getCode() == 1062) {
+      // dont think you can get this exception with this form but better to be safe
+      $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error. 
+    }
+    else{
+      throw $e; //TODO
+    }
+    
+  }
+  
+  if(insertSuccess){
+    // redirect the user to the newly created lights' page
+    header("Location: ../../lights/".$newLightId);
+  }
+  
+			
+			
+			
+			/****************************************************/
 			
 		
 	}
@@ -213,11 +263,25 @@ function createSessionToken($val){
 		$records->execute();
 		$results = $records->fetch(PDO::FETCH_ASSOC);
 		if($results > 0){
-			$now = time();
 			$sessionExpiry = $results['SessionExpiration'];
 			
-			if($now < $sessionExpiry) {
-				return true;	
+			//get the current time
+			$currentTime = new DateTime("now", new DateTimeZone('Australia/Melbourne') );
+			
+			//Turn it into a string
+			$formattedCurrentTime = $currentTime->format('Y-m-d H:i:s');
+			
+			
+			//get the userID
+			$userId =  $results['UserID'];
+			/*DEBUG
+			echo "$requestSession \n";
+			echo "$formattedCurrentTime \n";
+			echo "$sessionExpiry \n";
+			*/
+						
+			if($formattedCurrentTime < $sessionExpiry) {
+				return $userId;	
 			}
 			else {
 				echo 'Sorry the session you provided has expired. Please send a POST request to /login to get a new session.';

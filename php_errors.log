@@ -180,3 +180,9 @@ Stack trace:
 [15-Jul-2016 08:22:59 UTC] PHP Parse error:  syntax error, unexpected 'panel' (T_STRING), expecting ',' or ';' in /home/ubuntu/workspace/dashboard/index.php on line 115
 [15-Jul-2016 08:23:58 UTC] PHP Parse error:  syntax error, unexpected 'col' (T_STRING), expecting ',' or ';' in /home/ubuntu/workspace/dashboard/index.php on line 111
 [15-Jul-2016 08:59:04 UTC] PHP Parse error:  syntax error, unexpected 'input' (T_STRING), expecting ',' or ';' in /home/ubuntu/workspace/dashboard/index.php on line 135
+[16-Jul-2016 02:15:11 UTC] PHP Parse error:  syntax error, unexpected 'nl2br' (T_STRING), expecting ',' or ';' in /home/ubuntu/workspace/dashboard/index.php on line 123
+[16-Jul-2016 02:42:44 UTC] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/ubuntu/workspace/lights/lights.php on line 145
+[16-Jul-2016 03:34:28 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/ubuntu/workspace/lights/lights.php on line 55
+[16-Jul-2016 03:34:31 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/ubuntu/workspace/lights/lights.php on line 55
+[16-Jul-2016 03:34:34 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/ubuntu/workspace/lights/lights.php on line 55
+[16-Jul-2016 03:35:14 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/ubuntu/workspace/lights/lights.php on line 55
