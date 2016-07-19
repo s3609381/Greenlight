@@ -12,6 +12,10 @@ ErrorDocument 403 /error/403.php
   Options -Indexes
   RewriteEngine On
   
+  # force ssl
+  RewriteCond     %{SERVER_PORT} ^80$
+  RewriteRule     ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
+  
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^api/([^/\.]+)/?$ api.php?url=$1 [PT,L,B]
@@ -20,6 +24,8 @@ ErrorDocument 403 /error/403.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^lights/([^/\.]+)/?$ lights/lights.php?url=$1 [PT,L,B]
+
+
 
 </IfModule>
 

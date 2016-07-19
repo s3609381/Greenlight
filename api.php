@@ -272,7 +272,7 @@ function createSessionToken($val){
 			$formattedCurrentTime = $currentTime->format('Y-m-d H:i:s');
 			
 			
-			//get the userID
+			//get the userID from the PDO query results
 			$userId =  $results['UserID'];
 			/*DEBUG
 			echo "$requestSession \n";

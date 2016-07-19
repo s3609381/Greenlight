@@ -73,7 +73,15 @@ session_start();
             <div class="col-md-12">
                 <div class="panel panel-no-border">
                     <div class="panel-body">
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+                        <p>Greenlight is a task based automation platform using a state management device represented as a light that can trigger preset notifications and actions. Greenlight will be a Web Application accessible through a standard web browser. Users can log onto the Greenlight website to create a light and define its properties.</p>
+
+                        <p>A light can do multiple things. Those with an account can subscribe to a light and can be notified by email, text or via a message on a social networking platform when a light’s status changes.</p>
+
+                        <p>A light can also trigger actions when it changes. For example a light could send a preconfigured email when it’s state changes to notify interested parties that something has happened. The Greenlight web application will also be manageable remotely through an API. Users, scripts, client applications, and devices can interact with the API service to send remote requests to get or set the status of a light or send requests to the API to create lights.</p>
+
+                        <p>More complex lights can be created that are used for managing more than  just true or false or off and on. These enhanced lights can be used as a visual representation of polling data where a question is asked to users who have access to a light and the light changes its state based on the data received.</p>
+
+                        <p>In conclusion, Greenlight is a simple web based way to say yes or no, on or off, I’m here / not here. Lights can be changed via several actions and subscribers to lights can get updates. A Greenlight can be triggered by an action or the changing of a Greenlight could trigger another action.</p>
                     </div>
                 </div>
             </div>

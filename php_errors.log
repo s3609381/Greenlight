@@ -186,3 +186,11 @@ Stack trace:
 [16-Jul-2016 03:34:31 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/ubuntu/workspace/lights/lights.php on line 55
 [16-Jul-2016 03:34:34 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/ubuntu/workspace/lights/lights.php on line 55
 [16-Jul-2016 03:35:14 UTC] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/ubuntu/workspace/lights/lights.php on line 55
+[19-Jul-2016 06:22:16 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in /home/ubuntu/workspace/dashboard/index.php on line 184
+[19-Jul-2016 06:22:29 UTC] PHP Parse error:  syntax error, unexpected 'echo' (T_ECHO) in /home/ubuntu/workspace/dashboard/index.php on line 188
+[19-Jul-2016 07:23:44 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42S02]: Base table or view not found: 1146 Table 'greenlight.tblLight' doesn't exist' in /home/ubuntu/workspace/dashboard/index.php:183
+Stack trace:
+#0 /home/ubuntu/workspace/dashboard/index.php(183): PDOStatement->execute()
+#1 {main}
+  thrown in /home/ubuntu/workspace/dashboard/index.php on line 183
+[19-Jul-2016 07:25:10 UTC] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/ubuntu/workspace/dashboard/index.php on line 214

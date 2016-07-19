@@ -137,7 +137,28 @@ else{
                     <div class="panel-body">
                         <center><div class="temp-greenlight" style="background: <?php echo $bgColour; ?>; padding: 50px;"></div>
                          <em>(<?php echo $lightState ?>)</em><br/><br/>
-                        <?php echo nl2br($lightDescription) ?>
+                        <?php echo nl2br($lightDescription) ?><br/><br/>
+                        
+                        
+                        
+                        <?php
+                        
+                        if( isset($_SESSION['user_name']) && $lightPublic == 1 ){
+                            
+                            
+                            
+                            echo "<button class='btn btn-success'>Subscribe</button>";
+                            
+                          
+                            
+                            
+                        }
+                        
+                        
+                        
+                        ?>
+                        
+                        
                         
                         
                         </center>

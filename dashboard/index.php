@@ -10,10 +10,18 @@ include('../config.php');
 
 $userId = $_SESSION['user_id'];
 
+// get the user's own lights
 $lights = $db->prepare("SELECT * FROM tblLights WHERE UserID = :userId");
-    $lights->bindParam(':userId', $userId);
-    $lights->execute();
-    $lightResults = $lights->fetchAll(PDO::FETCH_ASSOC);
+$lights->bindParam(':userId', $userId);
+$lights->execute();
+$lightResults = $lights->fetchAll(PDO::FETCH_ASSOC);
+    
+// get the user's subscribed lights
+$feedLights = $db->prepare("SELECT * FROM tblFeed WHERE UserID = :userId");
+$feedLights->bindParam(':userId', $userId);
+$feedLights->execute();
+$feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <html lang="en">
@@ -111,11 +119,11 @@ $lights = $db->prepare("SELECT * FROM tblLights WHERE UserID = :userId");
        // the background colour of the lights change inline here. (dont really know how it's going to work when we have a graphic for the lights.)
        echo "
               
-        <div class='panel panel-default' style='padding-left: 10px; padding-right: 10px'; padding-bottom:10px'>
+        <div class='panel panel-default' style='padding-left: 10px; padding-right: 10px; padding-bottom:10px'>
         
           <div class='row'>
             <div class='panel-body'>
-              <div class='col-md-2 temp-greenlight' style='background: ".$bgColour."';'>
+              <div class='col-md-2 temp-greenlight' style='background: ".$bgColour."';>
               </div>
               <div class='col-md-10'>
                 <b><a href='/lights/".$lights['LightID']."'>".$lights['LightTitle']."</a></b>
@@ -159,7 +167,65 @@ $lights = $db->prepare("SELECT * FROM tblLights WHERE UserID = :userId");
             <h4>Subscribed Lights</h4>
           </div>
           <div class="panel-body">
-            <p>Lights</p>
+            
+            
+    <?php
+    
+     $colCount = 1;
+     
+     foreach($feedLightResults as $feedLights){
+       
+       // will need to get the light name and the light colour id from the tblLights table
+       // then get the hex value using the colour id for the background colour. 
+       
+       $light = $db->prepare("SELECT * FROM tblLights WHERE LightID = :lightId");
+       $light->bindParam(':lightId', $feedLights['LightID']);
+       $light->execute();
+       $result = $light->fetch(PDO::FETCH_ASSOC);
+       
+       $lightColour = $db->prepare("SELECT * FROM tblLightColour WHERE ColourID = :colourId");
+       $lightColour->bindParam(':colourId', $result['ColourID']);
+       $lightColour->execute();
+       $hexCode = $lightColour->fetch(PDO::FETCH_ASSOC);
+       
+       $bgColour = $hexCode['HexValue'];
+       
+       if($lights['State']==0){
+         $bgColour = "#7E7E7E";
+       }
+       
+       $feedLightUrl = "https://greenlight-drop-table-team-hypnotik.c9users.io/lights/".$feedLights['LightID'];
+       
+
+       
+       if($colCount>3){
+         $colCount = 1;
+       }
+       
+       if($colCount==1){
+        echo "
+        
+        <div class='row'>
+        ";
+       }
+          
+       echo " <div class='col-md-4'><div class='temp-greenlight-feed' style='background: ".$bgColour."';></div>
+       
+       <center><small><a href='$feedLightUrl'>".$result['LightTitle']."</a></small></center>
+              </div>
+            ";
+            
+       if($colCount==3){     
+        echo "</div>";
+       }
+      
+       $colCount++; 
+            } 
+            
+            ?> 
+              
+        
+            
             
           </div>
         </div>
