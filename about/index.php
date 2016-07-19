@@ -73,9 +73,9 @@ session_start();
             <div class="col-md-12">
                 <div class="panel panel-no-border">
                     <div class="panel-body">
-                        <p>Greenlight is a task based automation platform using a state management device represented as a light that can trigger preset notifications and actions. Greenlight will be a Web Application accessible through a standard web browser. Users can log onto the Greenlight website to create a light and define its properties.</p>
+                        <p>Greenlight is a web application based on tasks you choose to be notified and updated about by displaying a light in any color of your choice. .</p>
 
-                        <p>A light can do multiple things. Those with an account can subscribe to a light and can be notified by email, text or via a message on a social networking platform when a light’s status changes.</p>
+                        <p>Those with an account can subscribe to a light and can be notified by email, text or via a message on a social networking platform when a light’s status changes.</p>
 
                         <p>A light can also trigger actions when it changes. For example a light could send a preconfigured email when it’s state changes to notify interested parties that something has happened. The Greenlight web application will also be manageable remotely through an API. Users, scripts, client applications, and devices can interact with the API service to send remote requests to get or set the status of a light or send requests to the API to create lights.</p>
 

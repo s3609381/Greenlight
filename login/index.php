@@ -124,15 +124,15 @@ if(isset($_SESSION['user_name'])){
 
               <form action="" method="post" class="form-horizontal">
                 <div class="form-group">
-                  <label for="inputUsername" class="col-sm-4 control-label">Username / Email</label>
-                  <div class="col-sm-8">
+                  <label for="inputUsername" class="col-sm-5 control-label">Username / Email</label>
+                  <div class="col-sm-7">
                     <input type="text" class="form-control" id="inputUsername" placeholder="Username" name="username" required>
                   </div>
                 </div>
                 
                 <div class="form-group">
-                  <label for="inputPassword" class="col-sm-4 control-label">Password</label>
-                  <div class="col-sm-8">
+                  <label for="inputPassword" class="col-sm-5 control-label">Password</label>
+                  <div class="col-sm-7">
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
                   </div>
                 </div>
@@ -153,7 +153,7 @@ if(isset($_SESSION['user_name'])){
                  -->
                  
                 <div class="form-group">
-                  <div class="col-sm-offset-4 col-sm-10">
+                  <div class="col-sm-offset-5 col-sm-10">
                     <input class="btn btn-success" type="submit" name='submit' value="Login" />
                   </div>
                 </div>

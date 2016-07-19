@@ -65,7 +65,6 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
   <script src="/js/jquery-2.2.4.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
   <script src="/js/dash-nav-js.js"></script>
-
   
 </head>
 
@@ -159,7 +158,6 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
             ?>
             
         </div>
-          
         
       <div class="col-md-4">
         <div class="panel panel-default">
@@ -167,7 +165,6 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
             <h4>Subscribed Lights</h4>
           </div>
           <div class="panel-body">
-            
             
     <?php
     
@@ -190,13 +187,11 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
        
        $bgColour = $hexCode['HexValue'];
        
-       if($lights['State']==0){
+       if($result['State']==0){
          $bgColour = "#7E7E7E";
        }
        
        $feedLightUrl = "https://greenlight-drop-table-team-hypnotik.c9users.io/lights/".$feedLights['LightID'];
-       
-
        
        if($colCount>3){
          $colCount = 1;
@@ -222,10 +217,7 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
        $colCount++; 
             } 
             
-            ?> 
-              
-        
-            
+        ?>
             
           </div>
         </div>

@@ -194,3 +194,14 @@ Stack trace:
 #1 {main}
   thrown in /home/ubuntu/workspace/dashboard/index.php on line 183
 [19-Jul-2016 07:25:10 UTC] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home/ubuntu/workspace/dashboard/index.php on line 214
+[19-Jul-2016 10:22:49 UTC] PHP Parse error:  syntax error, unexpected '" method="' (T_CONSTANT_ENCAPSED_STRING), expecting ',' or ';' in /home/ubuntu/workspace/lights/lights.php on line 160
+[19-Jul-2016 10:33:43 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/ubuntu/workspace/lights/lights.php on line 234
+[19-Jul-2016 10:33:56 UTC] PHP Parse error:  syntax error, unexpected end of file in /home/ubuntu/workspace/lights/lights.php on line 234
+[19-Jul-2016 10:34:33 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/lights/lights.php on line 37
+[19-Jul-2016 10:34:33 UTC] PHP Stack trace:
+[19-Jul-2016 10:34:33 UTC] PHP   1. {main}() /home/ubuntu/workspace/lights/lights.php:0
+[19-Jul-2016 10:39:46 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'UserID' cannot be null' in /home/ubuntu/workspace/lights/lights.php:27
+Stack trace:
+#0 /home/ubuntu/workspace/lights/lights.php(27): PDOStatement->execute()
+#1 {main}
+  thrown in /home/ubuntu/workspace/lights/lights.php on line 27

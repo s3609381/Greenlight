@@ -8,11 +8,51 @@ if(!isset($_GET['url'])){
     // redirect back to login or dashboard if user tries to access lights.php directly
     header("Location: ../login.php");
 }
+
 else{
+    
+    // get the database
     include('../config.php');
     
     // get the light id from the url
     $lightId = $_GET['url'];
+    
+    // get the current logged in user from the session
+    $lightViewer = $_SESSION['user_id'];
+    
+    if(isset($_POST['sub'])){
+        try{
+            $records = $db->prepare("INSERT INTO tblFeed(UserID, LightID) VALUES (:userId, :lightId)");
+            $records->bindParam(':lightId', $lightId);
+            $records->bindParam(':userId', $lightViewer);
+            $records->execute();
+        }catch (PDOException $e){
+            if ($e->getCode() == 1062) {
+                // dont think you can get this exception with this form but better to be safe
+                $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error.
+            }
+            else{
+                throw $e; //TODO
+            }
+        }
+    }
+
+    if(isset($_POST['unsub'])){
+        try{
+            $records = $db->prepare("DELETE FROM tblFeed WHERE UserID = :userId AND LightID = :lightId");
+            $records->bindParam(':lightId', $lightId);
+            $records->bindParam(':userId', $lightViewer);
+            $records->execute();
+        }catch (PDOException $e){
+            if ($e->getCode() == 1062) {
+                // dont think you can get this exception with this form but better to be safe
+                $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error.
+            }
+            else{
+                throw $e; //TODO
+            }
+        }
+    }
     
     $records = $db->prepare("SELECT * FROM tblLights WHERE LightID = :lightId");
     $records->bindParam(':lightId', $lightId);
@@ -34,7 +74,6 @@ else{
         $lightName = $results['LightTitle'];
         $lightDescription = $results['Description'];
         $lightOwner = $results['UserID'];
-        $lightViewer = $_SESSION['user_id'];
         $lightPublic = $results['Public'];
         
         // find out if the light is public or private (public = 0 is private, public = 1 is public)
@@ -59,6 +98,7 @@ else{
          $lightState ='off';
        }
     }
+    
 }
 
 ?>
@@ -106,8 +146,6 @@ else{
 
 </head>
 
-
-
 <body>
     <!-- nav bar + header -->
     <?php
@@ -132,6 +170,7 @@ else{
                 </h1>
                 
             </div>
+            
             <div class="col-md-12">
                 <div class="panel panel-no-border">
                     <div class="panel-body">
@@ -139,39 +178,51 @@ else{
                          <em>(<?php echo $lightState ?>)</em><br/><br/>
                         <?php echo nl2br($lightDescription) ?><br/><br/>
                         
-                        
-                        
                         <?php
                         
-                        if( isset($_SESSION['user_name']) && $lightPublic == 1 ){
+                        if( isset($_SESSION['user_name']) && $lightPublic == 1 && $lightOwner!=$lightViewer){
                             
-                            
-                            
-                            echo "<button class='btn btn-success'>Subscribe</button>";
-                            
-                          
-                            
-                            
+                         $records = $db->prepare("SELECT * FROM tblFeed WHERE LightID = :lightId AND UserID = :userId");
+                         $records->bindParam(':lightId', $lightId);
+                         $records->bindParam(':userId', $lightViewer);
+                         $records->execute();
+                         $results = $records->fetch(PDO::FETCH_ASSOC);
+                         
+                         if($results>0){
+                             
+                             // trigger deletion from tblFeed (unsubscribe)
+                             echo "
+                             <form action='' method='post'>
+                             <button class='btn btn-default' type='submit' name='unsub'>Unsubscribe</button>
+                             </form>";
+                         }
+                         else{
+                             
+                             // trigger insert into tblFeed (subscribe)
+                             echo "
+                             <form action='' method='post'>
+                             <button class='btn btn-success' type='submit' name='sub'>Subscribe</button>
+                             </form>
+                             ";
+                         }
                         }
                         
-                        
-                        
                         ?>
-                        
-                        
-                        
                         
                         </center>
                     </div>
                 </div>
             </div>
           </div>
-        <hr>
+        
+    <hr>
+    
+    <!-- footer -->
+    <?php include("../modules/footer.php") ?>
 
-        <!-- footer -->
-        <?php include("../modules/footer.php") ?>
-
-    </div><!-- /contatiner -->
+    </div>
+    <!-- /contatiner -->
+    
 </body>
 
 </html>
