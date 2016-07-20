@@ -77,7 +77,7 @@ session_start();
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
-                        <h3 class="panel-title">Does my greenlight have to be public?</h3>
+                        <a href="#" style="color: black; "><h3 class="panel-title">Does my greenlight have to be public?</h3></a>
                     </div>
                     <div class="panel-body panel-body-hidden">
                         No, you can have a public greenlight that other people can see without a link or you can select your light to be a private greenlight, where you are the only person who sees it. Optionally your private greenlight can be shared via a link with other people.
@@ -88,7 +88,7 @@ session_start();
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
-                        <h3 class="panel-title">How do I change my account details?</h3>
+                        <a href="#" style="color: black; "><h3 class="panel-title">How do I change my account details?</h3></a>
                     </div>
                     <div class="panel-body panel-body-hidden">
                         When you are logged in, go to the Navigation Bar at the top of the screen then to 'user name -> settings'. The dashboard also has an option button where your user settings can be changed.
@@ -98,7 +98,7 @@ session_start();
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
-                        <h3 class="panel-title">Can I set my Greenlight to my own colour?</h3>
+                        <a href="#" style="color: black; "><h3 class="panel-title">Can I set my Greenlight to my own colour?</h3></a>
                     </div>
                     <div class="panel-body panel-body-hidden">
                         At this stage you can choose from a range of 6 different colours. There are plans to provide users with the ability to create their own colour from a colour selection chart.
@@ -108,7 +108,7 @@ session_start();
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
-                        <h3 class="panel-title">Question</h3>
+                        <a href="#" style="color: black; "><h3 class="panel-title">Question</h3></a>
                     </div>
                     <div class="panel-body panel-body-hidden">
                         Answer
