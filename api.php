@@ -31,7 +31,6 @@ else {
 	}
 }
 
-
 function parseLoginRequest() {
 	//Here we figure out what type of request the user sent and if its supported call the relevant function or return HTTP status code of 401 (Unauthorised)
 	$method = $_SERVER['REQUEST_METHOD'];
@@ -54,7 +53,7 @@ function parseLightRequest() {
 			createLight();
 			break;
 		case 'GET':
-			getLight();
+			getLights();
 		case 'DELETE':
 			deleteLight();
 			break;
@@ -144,9 +143,11 @@ function createLight(){
 	//php://input = the body of a request sent to the site
 	$input = json_decode(file_get_contents('php://input'),true);
 	
-	$requestName =  $input['name'];
+	$requestlightTitle =  $input['lightTitle'];
+	$requestDescription = ['description'];
 	$requestLightType =  $input['lightType'];
 	$requestColourType =  $input['colourId'];
+	$requestPublic =  $input['public'];
 	$requestState =  $input['state'];
 	$requestGroupLight =  $input['groupLight'];
 	$requestInviteAllowed =  $input['inviteAllowed'];
@@ -164,25 +165,24 @@ function createLight(){
 	$userId = checkSession($requestSessionId);
 	// Should do a check here to see if a sessionId has been provided in the request.
 	if ($userId > 0){
-		if ($requestLightType == 'Basic' || $requestLightType == 'BASIC');
+		if ($requestLightType == 'basic' || $requestLightType == 'BASIC');
 			echo "do PDO stuff \n";
 			
 			
 			
 			//build the pdo statement
-	/**************************************************
-
- 
+	/**************************************************/
   
   try{
     $newLightQuery = $db->prepare("INSERT INTO tblLights(UserID, TriggerTypeName, TriggerValuesID, ColourID, LightType, Public, State, GroupLight, InviteAllowed, PostToSocialMedia, LightSocialMediaID, Reoccurrence, LightDeleted, Description, LightTitle)
-    VALUES (:userID, 5, NULL, :colourID, 0, :public, :state, 0, 1, 0, NULL, 0, 0, :description, :title)");
+    VALUES (:userID, 5, NULL, :colourID, :lightType, :public, :state, :grouplight, :inviteAllowed, :postToSocialMedia, :lightSocialMediaId, :reoccurrence, 0, :description, :title)");
     $newLightQuery->bindParam(':userID', $userID);
     $newLightQuery->bindParam(':colourID', $requestColourType);
-    $newLightQuery->bindParam(':public', $lightPublic, PDO::PARAM_INT);
-    $newLightQuery->bindParam(':state', $lightState, PDO::PARAM_INT);
-    $newLightQuery->bindParam(':description', $lightDesc);
-    $newLightQuery->bindParam(':title', $lightName);
+    $newLightQuery->bindParam(':public', $requestPublic, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':state', $requestState, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':grouplight', $requestGroupLight, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':description', $requestDescription);
+    $newLightQuery->bindParam(':title', $requestlightTitle);
     $newLightQuery->execute();
     
     //Get the new ID for the light as it is an auto increment field
@@ -224,6 +224,8 @@ function createLight(){
 function getLights() 
 	// Should do a check here to see if a sessionId has been provided in the request.
 
+
+// Can use this to return the response as json
 {
 	$result = array();
 	$result[] = array('config1' => 'value1');

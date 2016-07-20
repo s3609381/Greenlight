@@ -101,7 +101,7 @@ session_start();
                         <h3 class="panel-title">Can I set my Greenlight to my own colour?</h3>
                     </div>
                     <div class="panel-body panel-body-hidden">
-                        At this stage you cannot choose your own colour, you can only pick a colour from the options presented. At some stage into the future we may have the ability to create your own colour, from a colour selection chart.
+                        At this stage you can choose from a range of 6 different colours. There are plans to provide users with the ability to create their own colour from a colour selection chart.
                     </div>
                 </div>
 
