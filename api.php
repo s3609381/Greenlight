@@ -153,6 +153,7 @@ function createLight(){
 	$requestInviteAllowed =  $input['inviteAllowed'];
 	$requestPostToSocialMedia =  $input['postToSocialMedia'];
 	$requestLightSocialMedia =  $input['lightSocialMedia'];
+	$requestReoccurrence = $input['reoccurrence'];
 	$requestSessionId =  $input['sessionId'];
 	
 	//If sessionId is empty reject the request.
@@ -170,24 +171,30 @@ function createLight(){
 			
 			
 			
-			//build the pdo statement
-	/**************************************************/
-  
+	//build the pdo statement
   try{
     $newLightQuery = $db->prepare("INSERT INTO tblLights(UserID, TriggerTypeName, TriggerValuesID, ColourID, LightType, Public, State, GroupLight, InviteAllowed, PostToSocialMedia, LightSocialMediaID, Reoccurrence, LightDeleted, Description, LightTitle)
     VALUES (:userID, 5, NULL, :colourID, :lightType, :public, :state, :grouplight, :inviteAllowed, :postToSocialMedia, :lightSocialMediaId, :reoccurrence, 0, :description, :title)");
-    $newLightQuery->bindParam(':userID', $userID);
+    $newLightQuery->bindParam(':userID', $userId);
     $newLightQuery->bindParam(':colourID', $requestColourType);
+    $newLightQuery->bindParam(':lightType', $requestLightType, PDO::PARAM_INT);
     $newLightQuery->bindParam(':public', $requestPublic, PDO::PARAM_INT);
     $newLightQuery->bindParam(':state', $requestState, PDO::PARAM_INT);
     $newLightQuery->bindParam(':grouplight', $requestGroupLight, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':inviteAllowed', $requestInviteAllowed, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':postToSocialMedia', $requestPostToSocialMedia, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':lightSocialMediaId', $requestLightSocialMedia, PDO::PARAM_INT);
+    $newLightQuery->bindParam(':reoccurrence', $requestReoccurrence, PDO::PARAM_INT);
     $newLightQuery->bindParam(':description', $requestDescription);
     $newLightQuery->bindParam(':title', $requestlightTitle);
     $newLightQuery->execute();
     
-    //Get the new ID for the light as it is an auto increment field
+    
+    //Get the new ID for the light as it is an auto increment field.
+    // We will return this ID in a message back to the user
     $newLightId = $db->lastInsertId();
     $insertSuccess=true;
+    echo "new light ID is $newLightId";
     
   }
   catch (PDOException $e){
@@ -202,16 +209,12 @@ function createLight(){
   }
   
   if(insertSuccess){
-    // redirect the user to the newly created lights' page
-    header("Location: ../../lights/".$newLightId);
+  	echo "Light Inserted \n";
+  	echo "Light Inserted your light can be viewed at https://greenlight-drop-table-team-hypnotik.c9users.io/lights/$newLightId";
+  	http_response_code(201);
+  	
   }
   
-			
-			
-			
-			/****************************************************/
-			
-		
 	}
 	else {
 		//exit the function
