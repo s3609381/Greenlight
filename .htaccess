@@ -7,7 +7,7 @@ ErrorDocument 500 /error/500.php
 ErrorDocument 403 /error/403.php
 
 
-# Redirect rule for all api calls and light pages
+# Redirect rule for all api calls and light pages (and light edit)
 <IfModule mod_rewrite.c>
   Options -Indexes
   RewriteEngine On
@@ -24,6 +24,10 @@ ErrorDocument 403 /error/403.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^lights/([^/\.]+)/?$ lights/lights.php?url=$1 [PT,L,B]
+  
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^dashboard/edit-light/([^/\.]+)/?$ dashboard/edit-light/index.php?url=$1 [PT,L,B]
 
 
 

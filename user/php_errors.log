@@ -1,0 +1,9 @@
+[21-Jul-2016 06:20:00 UTC] PHP Warning:  include(../config.php): failed to open stream: No such file or directory in /home/ubuntu/workspace/user/settings/index.php on line 9
+[21-Jul-2016 06:20:00 UTC] PHP Stack trace:
+[21-Jul-2016 06:20:00 UTC] PHP   1. {main}() /home/ubuntu/workspace/user/settings/index.php:0
+[21-Jul-2016 06:20:00 UTC] PHP Warning:  include(): Failed opening '../config.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/ubuntu/workspace/user/settings/index.php on line 9
+[21-Jul-2016 06:20:00 UTC] PHP Stack trace:
+[21-Jul-2016 06:20:00 UTC] PHP   1. {main}() /home/ubuntu/workspace/user/settings/index.php:0
+[21-Jul-2016 06:20:00 UTC] PHP Fatal error:  Call to a member function prepare() on a non-object in /home/ubuntu/workspace/user/settings/index.php on line 14
+[21-Jul-2016 06:20:00 UTC] PHP Stack trace:
+[21-Jul-2016 06:20:00 UTC] PHP   1. {main}() /home/ubuntu/workspace/user/settings/index.php:0

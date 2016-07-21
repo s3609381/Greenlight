@@ -18,6 +18,9 @@
             <button type="button" class="list-group-item disabled" onclick="window.location='/dashboard/create-enhanced-light';">Enhanced Light</button>
         </div>
         
+        <button type="button" class="list-group-item active" onclick="window.location='/user';">Profile</button>
+        <button type="button" class="list-group-item" onclick="window.location='/user/settings';">Settings</button>
+        
         <button type="button" class="list-group-item" onclick="window.location='/logout.php';">Log Out</button>
 
 

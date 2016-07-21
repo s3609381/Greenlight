@@ -6,7 +6,7 @@ session_start();
 
 if(!isset($_GET['url'])){
     // redirect back to login or dashboard if user tries to access lights.php directly
-    header("Location: ../login.php");
+    header("Location: ../login");
 }
 
 else{

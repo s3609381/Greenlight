@@ -135,7 +135,7 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
             
              <div class='row'>
                <div class='col-md-12'>
-                 <span class='pull-right'>Share | Edit</span>
+                 <span class='pull-right'>Share | <a href='/dashboard/edit-light/".$lights['LightID']."'>Edit</a></span>
                </div>
              </div>
             
