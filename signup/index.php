@@ -197,12 +197,12 @@ if(isset($_POST['signup'])){
   <title>Greenlight - Sign Up</title>
 
   <!-- css -->
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/style.css" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
 
   <!-- js / jquery -->
-  <script src="/js/jquery-2.2.4.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
+  <script src="../js/jquery-2.2.4.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
 
 </head>
 

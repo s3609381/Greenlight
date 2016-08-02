@@ -28,33 +28,61 @@
     <title>Steph Testing Stuff</title>
 
     <!-- css -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrapValidator.min.css" rel="stylesheet">
 
     <!-- js / jquery -->
-    <script src="js/jquery-2.2.4.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/dash-nav-js.js"></script>
+    <script src="/js/jquery-2.2.4.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/dash-nav-js.js"></script>
+    <script src="/js/bootstrapValidator.min.js"></script>
 </head>
 
 <body>
     
-<textarea id='text'></textarea>
-<div id='target'></div>
+<form id="registerForm" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-lg-3 control-label">Password</label>
+        <div class="col-lg-5">
+            <input type="password" class="form-control" name="password" />
+        </div>
+    </div>
 
-<br/>
+    <div class="form-group">
+        <label class="col-lg-3 control-label">Retype password</label>
+        <div class="col-lg-5">
+            <input type="password" class="form-control" name="confirmPassword" />
+        </div>
+    </div>
+</form>
 
-<textarea id='text1'></textarea>
-<div id='target1'></div>
+<script>
 
-<script type="text/javascript">
 
-$('#text').keyup(function() {
-    var keyed = $(this).val().replace(/\n/g, '<br/>');
-    $("#target").html(keyed);
+$(document).ready(function() {
+    $('#registerForm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            password: {},
+            confirmPassword: {
+                validators: {
+                    identical: {
+                        field: 'password',
+                        message: 'The password and its confirm are not the same'
+                    }
+                }
+            }
+        }
+    });
 });
-
 </script>
+
+
 
 
 </body>

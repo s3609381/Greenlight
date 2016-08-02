@@ -65,17 +65,28 @@ if(isset($_POST['submit'])){
     else{
       throw $e; //TODO
     }
-    
   }
   
-  if(insertSuccess){
+  if($insertSuccess){
     // redirect the user to the newly created lights' page
     header("Location: ../../lights/".$newLightId);
   }
-  
-  
-  
 }
+
+// get user details from the user details table
+$getUserDetails = $db->prepare("SELECT * FROM tblUserDetailsSettings WHERE UserID = :userId");
+$getUserDetails->bindParam(':userId', $_SESSION['user_id']);
+$getUserDetails->execute();
+$userDetails = $getUserDetails->fetch(PDO::FETCH_ASSOC);
+
+$defaultColourID = $userDetails['DefaultLightColourID'];
+// get Hex Value from colour ID
+$tblLightColourRecords = $db->prepare("SELECT * FROM tblLightColour WHERE ColourID = :colourId");
+$tblLightColourRecords->bindParam(':colourId', $defaultColourID);
+$tblLightColourRecords->execute();
+$tblLightColourResults = $tblLightColourRecords->fetch(PDO::FETCH_ASSOC);
+
+$lightHexValue = $tblLightColourResults['HexValue'];
 
 ?>
 
@@ -191,15 +202,30 @@ if(isset($_POST['submit'])){
                   <label for="colorselector" class="col-sm-3 control-label">Colour</label>
                   <div class="col-sm-9">
                 
-                    <select id="colorselector" name="lightclr">
-                      <option value="#5CB85C" data-color="#5CB85C" selected="selected"></option>
-                      <option value="#A0522D" data-color="#A0522D"></option>
-                      <option value="#FF4500" data-color="#FF4500"></option>
-                      <option value="#DC143C" data-color="#DC143C"></option>
-                      <option value="#FF8C00" data-color="#FF8C00"></option>
-                      <option value="#C71585" data-color="#C71585"></option>
-                      <!-- add more colours -->
-                      </select>
+                    <?php 
+                    
+                    // create an array of the colours in the colour selector then iterate through while creating the drop down menu to make sure the correct colour is selected.
+                    $colourArray = array("#5CB85C", "#A0522D", "#FF4500", "#DC143C", "#FF8C00", "#C71585", "#EF476F", "#FFD166", "#06C995", "#2F8CAA", "#845F82", "#AAC5AE", "#72584D", "#FAF4C1", "#FF6666", "#16BFEE", "#10FFCA", "#87BB3F", "#F4E226", "#B22AA4");
+                    
+                    echo "<select id='colorselector' name='lightclr'>";
+                    
+                    foreach($colourArray as $colour){
+                      
+                      if($colour == $lightHexValue){
+                        
+                        echo "<option value='"."$colour"."' data-color='"."$colour"."' selected='selected'></option>";
+                        
+                      }
+                      else{
+                        
+                        echo "<option value='"."$colour"."' data-color='"."$colour"."'></option>";
+                        
+                      }
+                    }
+                    
+                    echo "</select>";
+                    
+                    ?>
                       
                     <script>
                       $('#colorselector').colorselector();
@@ -232,7 +258,7 @@ if(isset($_POST['submit'])){
                 <div class="form-group">
                   <div class="col-sm-offset-3 col-sm-9">
                     <input class="btn btn-success" type="submit" name='submit' value="Create" />
-                    <input class="btn btn-default" type="button" name='cancel' value="Cancel" onclick="window.location='/dashboard/index.php';" />
+                    <input class="btn btn-default" type="button" name='cancel' value="Cancel" onclick="window.location='/dashboard/';" />
                   </div>
                 </div>
           
@@ -246,7 +272,7 @@ if(isset($_POST['submit'])){
         <div class="panel panel-default">
           
           <div class="panel-body">
-            <div class="temp-greenlight"></div>
+            <div class="temp-greenlight" style="background-color: <?php echo $lightHexValue; ?>"></div>
             <div id="nameTarget" class="light-name"></div>
             <div id="descTarget" class="light-desc"></div>
             

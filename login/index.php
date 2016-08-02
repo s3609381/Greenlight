@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 
 <?php
+session_start();
+
 
 // redirect already logged in users back to the dashboard if they somehow end up back on the login page while logged in.
 if(isset($_SESSION['user_name'])){ 
-    header("Location: ../dashboard");
+  header("Location: ../dashboard/");
   }
+  
    include("../config.php");
-   session_start();
+   
    
  if(isset($_POST['submit'])){
 		$errMsg = '';

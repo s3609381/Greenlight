@@ -1,33 +1,48 @@
 Order Deny,Allow
 Allow from any
 
+<Limit GET POST PUT DELETE>
+  Allow from all
+</Limit>
+
 # Documents that will display when a particular HTTP error is thrown
 ErrorDocument 404 /error/404.php
 ErrorDocument 500 /error/500.php
 ErrorDocument 403 /error/403.php
 
 
-# Redirect rule for all api calls and light pages (and light edit)
+# Redirect rule for all api calls and light pages (and light edit and user profiles)
 <IfModule mod_rewrite.c>
   Options -Indexes
   RewriteEngine On
   
   # force ssl
-  RewriteCond     %{SERVER_PORT} ^80$
-  RewriteRule     ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
+  RewriteCond %{SERVER_PORT} ^80$
+  RewriteRule ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
   
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^api/([^/\.]+)/?$ api.php?url=$1 [PT,L,B]
   
-  
+  # redirect all lights/12345 to lights/lights.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^lights/([^/\.]+)/?$ lights/lights.php?url=$1 [PT,L,B]
   
+  # redirect all dashboard/edit-light/12345 to dashboard/edit-light/index.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^dashboard/edit-light/([^/\.]+)/?$ dashboard/edit-light/index.php?url=$1 [PT,L,B]
+  
+  # redirect all user/12345 to user/index.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^user/([^/\.]+)/?$ user/index.php?url=$1 [PT,L,B]
+  
+  # redirect all user/edit/12345 to user/settings/index.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^user/settings/([^/\.]+)/?$ user/settings/index.php?url=$1 [PT,L,B]
 
 
 

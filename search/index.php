@@ -1,7 +1,147 @@
 <!DOCTYPE html>
 
 <?php
-session_start();
+    session_start();
+   
+    include("../config.php");
+   
+    //Variable $searchField is created from the following line
+   
+    parse_str($_SERVER["QUERY_STRING"]);
+   
+    $outputResults = '';
+   
+    if($searchField != null){
+        $searchField = trim($searchField);
+        $searchField = strtolower($searchField);
+        $searchField = htmlspecialchars($searchField);
+       
+        $commonWords = array(" the ", " a ", " i ", " an ", " am ", " it ", " in ", " is ", " if ", ", ", ". ", "! ", "? ");
+        $searchField = str_ireplace($commonWords, " ", $searchField);
+        $searchTerms = split(' ', $searchField);
+       
+        $query = 'SELECT LightID, UserID, LightTitle, Description, ColourID, State, LightDeleted, Public FROM tblLights WHERE ';
+        $i = 0;
+   
+        foreach ($searchTerms as $term){
+            if($i == 0){
+                $query .= 'LightTitle LIKE \'%'.$term.'%\' OR Description LIKE \'%'.$term.'%\' ';
+            }
+            else{
+                $query .= 'OR LightTitle LIKE \'%'.$term.'%\' OR Description LIKE \'%'.$term.'%\' ';
+            }
+           
+            $i++;
+        }
+        
+        $query .= 'AND Public = true';
+        
+        try{
+            $searchQuery = $db->prepare($query);
+            $searchQuery->execute();
+            $searchResults = $searchQuery->fetchAll(PDO::FETCH_ASSOC);
+           
+            if($searchResults == null){
+                $outputRows = 'No matching results. Please try with a different search.';
+            }
+            else{
+                $outputRows = '';
+                
+                $searchResults = orderResults($searchResults, $searchTerms);
+                
+                foreach($searchResults as $row){
+                    
+                    // so deleted lights don't display in the results. 
+                    if ($row['LightDeleted']==1){
+                        continue;
+                    }
+                    
+                    // Lights that are NOT set to PUBLIC don't display in the results. (SC 01/08/2016)
+                    if ($row['Public']==0){
+                        continue;
+                    }
+                    
+                    // get corresponding hex value for the colour id of the light.
+                    $lightColour = $db->prepare("SELECT * FROM tblLightColour WHERE ColourID = :colourId");
+                    $lightColour->bindParam(':colourId', $row['ColourID']);
+                    $lightColour->execute();
+                    $hexCode = $lightColour->fetch(PDO::FETCH_ASSOC);
+                    
+                    $lightUrl = "https://greenlight-drop-table-team-hypnotik.c9users.io/lights/".$row['LightID'];
+                   
+                    $bgColour = $hexCode['HexValue'];
+                    
+                    if($row['State']==0){
+                        $bgColour = "#7E7E7E";
+                    }
+                    
+                    $outputRows .= "  
+                        <div class='panel panel-default' style='padding-left: 10px; padding-right: 10px; padding-bottom:10px'>
+                            <div class='row'>
+                                <div class='panel-body'>
+                                    <div class='col-md-2 temp-greenlight' style='background: ".$bgColour."';>
+                                    </div>
+                                    <div class='col-md-10'>
+                                        <b><a href='/lights/".$row['LightID']."'>".$row['LightTitle']."</a></b>
+                                        <p>
+                                            <small>".nl2br($row['Description'])."</small>
+                                        </p>
+                                        <p>
+                                            <small>Match %: ".nl2br($row['Match'])."</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>";
+                }
+            }
+        }
+        catch(PDOException $e){
+            $outputRows = '<p>'.$e->getCode().': There was a problem with the search terms.<br />Please check and try again.</p>';
+        }
+    }
+    
+    function orderResults($resultArray, $resultTerms){
+        $orderedResults = array();
+        $termCount = count($resultTerms);
+        
+        foreach($resultArray as &$result){
+            $titleMatch = 0.00;
+            $descMatch = 0.00;
+            
+            $titleCount = 0;
+            $descCount = 0;
+            
+            foreach($resultTerms as $term){
+                if(preg_match('/\b'.$term.'\b/i', $result['LightTitle'])){
+                    $titleCount += 1;
+                }
+                
+                if(preg_match('/\b'.$term.'\b/i', $result['Description'])){
+                    $descCount += 1;
+                }
+            }
+            
+            $titleMatch = ($titleCount / $termCount) * 0.75;
+            $descMatch = ($descCount / $termCount) * 0.25;
+            $match = $titleMatch + $descMatch;
+            $result['Match'] = $match;
+            
+            $orderedResults[] = $result;
+        }
+        
+        uasort($orderedResults, 'cmp');
+        
+        return $orderedResults;
+    }
+    
+    function cmp($a, $b){
+        if($a['Match'] == $b['Match']){
+            return 0;
+        }
+        
+        return ($a['Match'] < $b['Match']) ? 1 : -1;
+    }
 ?> 
 
 
@@ -39,12 +179,12 @@ session_start();
     <title>Greenlight</title>
 
     <!-- css -->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
 
     <!-- js / jquery -->
-    <script src="/js/jquery-2.2.4.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <script src="../js/jquery-2.2.4.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 
 </head>
 
@@ -77,14 +217,23 @@ session_start();
                         
                         <!-- search functionality needs to be written -->
                         
-                        <form class="form-inline" role="search">
+                        <form class="form-inline" role="search" action="/search/?searchField">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search">
+                                <input type="text" name="searchField" class="form-control" placeholder="Search">
                             </div>
                             <button type="submit" class="btn btn-success">Submit</button>
                         </form>
                         
                         
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-no-border">
+                    <div class="panel-body">
+                        <?php
+                            echo $outputRows;
+                        ?>
                     </div>
                 </div>
             </div>
@@ -99,3 +248,5 @@ session_start();
 </body>
 
 </html>
+
+

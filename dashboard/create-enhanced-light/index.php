@@ -113,16 +113,16 @@ if(isset($_POST['submit'])){
   <title>Greenlight - Dashboard - Create Basic Light</title>
   
   <!-- css -->
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/style.css" rel="stylesheet">
-  <link href="/css/bootstrap-colorselector.css" rel="stylesheet">
+  <link href="../../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../css/style.css" rel="stylesheet">
+  <link href="../../css/bootstrap-colorselector.css" rel="stylesheet">
   
   <!-- js / jquery -->
-  <script src="/js/jquery-2.2.4.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/dash-nav-js.js"></script>
-  <script src="/js/bootstrap-colorselector.js"></script>
-  <script src="/js/bootstrap-toggle.min.js"></script>
+  <script src="../../js/jquery-2.2.4.min.js"></script>
+  <script src="../../js/bootstrap.min.js"></script>
+  <script src="../../js/dash-nav-js.js"></script>
+  <script src="../../js/bootstrap-colorselector.js"></script>
+  <script src="../../js/bootstrap-toggle.min.js"></script>
   
   <!-- opt-in for bootstrap tooltips because they are auto-off for performance reasons -->
   <script>

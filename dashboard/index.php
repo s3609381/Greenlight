@@ -58,13 +58,13 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
   <title>Greenlight - Dashboard</title>
   
   <!-- css -->
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/style.css" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
   
   <!-- js / jquery -->
-  <script src="/js/jquery-2.2.4.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="/js/dash-nav-js.js"></script>
+  <script src="../js/jquery-2.2.4.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/dash-nav-js.js"></script>
   
 </head>
 
@@ -92,14 +92,19 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
           </h1>
       </div>
      
-     <?php include("../modules/dash-nav.php"); ?>
+    <?php include("../modules/dash-nav.php"); ?>
      
      <div class='col-md-6'>
        <div class='panel-heading'>Lights</div>
      
-     <?php
+    <?php
      
      foreach($lightResults as $lights){
+         
+       // if a light has been deleted we don't want to show it so this checks for that and skips the rest of the loop if the light is gone (so it doesn't display)
+       if($lights['LightDeleted']==1){
+           continue;
+       }
        
        // get corresponding hex value for the colour id of the light.
        $lightColour = $db->prepare("SELECT * FROM tblLightColour WHERE ColourID = :colourId");
@@ -133,13 +138,7 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
             </div>
           </div>
             
-             <div class='row'>
-               <div class='col-md-12'>
-                 <span class='pull-right'>Share | <a href='/dashboard/edit-light/".$lights['LightID']."'>Edit</a></span>
-               </div>
-             </div>
-            
-             <div class='row' style='margin-bottom:10px; '>
+             <div class='row' style='margin-bottom:10px;' id='toggleNav'>
                <div class='col-md-12'>
                  <div class='input-group'>
                    <input type='text' class='form-control' value='".$lightUrl."' readonly>
@@ -149,13 +148,20 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
                  </div>
                </div>
              </div>
+             
+             <div class='row'>
+               <div class='col-md-12'>
+                 <span class='pull-right'><a href='/dashboard/edit-light/".$lights['LightID']."'>Edit</a></span>
+               </div>
+             </div>
+             
           </div>
           
           ";
-            
             }
+        
+        ?>
             
-            ?>
             
         </div>
         
@@ -179,6 +185,11 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
        $light->bindParam(':lightId', $feedLights['LightID']);
        $light->execute();
        $result = $light->fetch(PDO::FETCH_ASSOC);
+       
+       // if a light has been deleted we don't want to show it so this checks for that and skips the rest of the loop if the light is gone (so it doesn't display)
+       if($result['LightDeleted']==1){
+           continue;
+       }
        
        $lightColour = $db->prepare("SELECT * FROM tblLightColour WHERE ColourID = :colourId");
        $lightColour->bindParam(':colourId', $result['ColourID']);

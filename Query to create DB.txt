@@ -139,14 +139,14 @@ CREATE TABLE IF NOT EXISTS `greenlight`.`tblReferenceTable`
 -- create table Sessions
 CREATE TABLE IF NOT EXISTS `greenlight`.`tblSessions`
 (
-	`SessionID` int(10) NOT NULL AUTO_INCREMENT,
+  'UID' int(10) NOT NULL AUTO_INCREMENT
+	`SessionID` VARCHAR(50) NOT NULL,
 	`UserID` int(10) NOT NULL,
 	`SocialMediaID` int(10) NULL,
     `AuthenticationTime` datetime null,
     `SessionExpiration` datetime null,
-    PRIMARY KEY (`SessionID`),
+    PRIMARY KEY (`UID`),
     KEY `UserID` (`UserID`),
-    KEY `SocialMediaID` (`SocialMediaID`)
 )
   ENGINE=InnoDB DEFAULT CHARSET=ascii AUTO_INCREMENT=1;
 

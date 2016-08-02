@@ -15,9 +15,9 @@
       </div>
       <div class="col-xs-6 col-md-4">
 
-        <form class="form-inline pull-right-lg" role="search">
+        <form class="form-inline pull-right-lg" role="search" action="/search/?searchField">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
+            <input type="text" name="searchField" class="form-control" placeholder="Search">
           </div>
           <button type="submit" class="btn btn-success">Submit</button>
         </form>

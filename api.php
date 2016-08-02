@@ -17,6 +17,7 @@ else {
 	// Get the redirected path from the $_GET collection 
 	// The request path will be everything past /api for example /api/login $requestpath = login
 	$requestPath = $_GET['url'];
+	echo $requestPath;
 
 	switch ($requestPath) {
 		case 'login':
@@ -67,6 +68,11 @@ function parseLightRequest() {
 }
 
 
+/*************************************************************************
+ * POST /LOGIN 
+ * 
+/***********************************************************************/
+
 function login()
 {
 	//Hands a POST request for /login
@@ -114,6 +120,7 @@ function insertSessionToken($userId, $token)
 	//include the sql library
 	include('config.php');
 	
+	echo "$token \n";
 	
 	//We need an australian timestamp for the session token
 	//Get the time as of now
@@ -136,7 +143,15 @@ function insertSessionToken($userId, $token)
     	}
 }
 
+/*************************************************************************
+ * POST /LIGHTS 
+ * 
+/***********************************************************************/
+
 function createLight(){
+	//This function inserts the light referenced in the body of the request into the database.
+	
+	
 	//include the sql library
 	include('config.php');
 	
@@ -168,7 +183,7 @@ function createLight(){
 	if ($userId > 0){
 		if ($requestLightType == 'basic' || $requestLightType == 'BASIC');
 			echo "do PDO stuff \n";
-			
+			echo "$requestDescription \n";
 			
 			
 	//build the pdo statement
@@ -223,19 +238,102 @@ function createLight(){
 
 }
 
+/*************************************************************************
+ * PATCH /LIGHTS 
+ * 
+/***********************************************************************/
 
-function getLights() 
-	// Should do a check here to see if a sessionId has been provided in the request.
-
-
-// Can use this to return the response as json
+function patchLights()
 {
-	$result = array();
-	$result[] = array('config1' => 'value1');
-	$result[] = array('config2' => 'value2');
-	//looks like the echo will output the JSON result to the body. So if the user is on a  website it will show on their page.
+	//Currently a patch only supports changing the light state.
 	
-	echo json_encode($result);
+	//include the database library
+	include('config.php');
+	
+	//Get the body of the request sent to the site
+	$input = json_decode(file_get_contents('php://input'),true);
+	
+
+	//Get the light resource we need to patch out of the URL
+	$url = $_GET['url']
+	$forwardslashIndex = strpos($url, "/")
+	$lightId = substr($url, $forwardslashIndex + 1)
+	
+	//If sessionId is empty reject the request.
+	if($requestSessionId == NULL) {
+			echo "Session ID is empty Please POST to the /login resource to recieve a sessionID";
+			http_response_code(401);
+			return;
+	}
+	
+	//Check if the provided session is valid
+	$userId = checkSession($requestSessionId);
+	$requestState =  $input['state'];
+	
+	if ($userId != false){
+		if ($requestState == '1' || $requestState == '0') {
+			try{
+    			$updateLight = $db->prepare("UPDATE tblLights SET State = :state where LightID = :lightId and UserID = :userId" );
+    			$updateLight->bindParam(':state', $requestState,  PDO::PARAM_INT);
+    			$updateLight->bindParam(':LightID', $lightId,  PDO::PARAM_INT);
+    			$updateLight->bindParam(':UserID', $userId,  PDO::PARAM_INT);
+    			$updateLight->execute();
+    
+			}
+				catch (PDOException $e){
+    			throw $e; //TODO better error handling
+    			}
+			}
+		}
+		else {
+			$response = "Please provide a 1 (on) or a 0 (off) for the light state";
+			echo json_encode($response);
+		}
+	}
+/*************************************************************************
+ * GET /LIGHTS 
+ * 
+/***********************************************************************/
+
+
+function getLights(){
+	include('config.php');
+	
+	$input = json_decode(file_get_contents('php://input'),true);
+	
+	// Should do a check here to see if a sessionId has been provided in the request.
+	if($input['sessionId'] != null){
+		$userId = checkSession($input['sessionId']);
+		
+		if($userId != false){
+			try{
+				$getLights = $db->prepare("SELECT * FROM tblLights WHERE UserID = :userId");
+				$getLights->bindParam(':userId', $userId);
+				$getLights->execute();
+				
+				$results = $getLights->fetch(PDO::FETCH_ASSOC);
+				
+				echo "Number of lights found: " + $results.count();
+				return json_encode($results);
+			}
+			catch(PDOException $e){
+				echo "Error: " + $e->getMessage();   //Make better error
+				return null;
+			}
+			
+		}
+		else{
+			echo "UserId not found for specified session. Please create a session using createSessionToken";
+			http_response_code(401);
+			return null;
+		}
+	}
+	else{
+		echo "Session ID is empty Please POST to the /login resource to recieve a sessionID";
+		http_response_code(401);
+		return null;
+	}
+
 }
 
 function processResponse($code, $type = 'application/json') {
@@ -300,5 +398,22 @@ function createSessionToken($val){
 		}
  	
  }
+ 
+ 
+//********
+//   JSON RESPONSE FUNCTION
+/********
+ {
+ 	
+ 	$result = array();
+	$result[] = array('config1' => 'value1');
+	$result[] = array('config2' => 'value2');
+	//looks like the echo will output the JSON result to the body. So if the user is on a  website it will show on their page.
+	
+	echo json_encode($result);
+
+ }
+  
+*/  
     
  ?>

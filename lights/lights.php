@@ -9,94 +9,91 @@ if(!isset($_GET['url'])){
     header("Location: ../login");
 }
 
-else{
+// get the database
+include('../config.php');
     
-    // get the database
-    include('../config.php');
+// get the light id from the url
+$lightId = $_GET['url'];
     
-    // get the light id from the url
-    $lightId = $_GET['url'];
+// get the current logged in user from the session
+$lightViewer = $_SESSION['user_id'];
     
-    // get the current logged in user from the session
-    $lightViewer = $_SESSION['user_id'];
-    
-    if(isset($_POST['sub'])){
-        try{
-            $records = $db->prepare("INSERT INTO tblFeed(UserID, LightID) VALUES (:userId, :lightId)");
-            $records->bindParam(':lightId', $lightId);
-            $records->bindParam(':userId', $lightViewer);
-            $records->execute();
-        }catch (PDOException $e){
-            if ($e->getCode() == 1062) {
-                // dont think you can get this exception with this form but better to be safe
-                $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error.
-            }
-            else{
-                throw $e; //TODO
-            }
+if(isset($_POST['sub'])){
+    try{
+        $records = $db->prepare("INSERT INTO tblFeed(UserID, LightID) VALUES (:userId, :lightId)");
+        $records->bindParam(':lightId', $lightId);
+        $records->bindParam(':userId', $lightViewer);
+        $records->execute();
+    }catch (PDOException $e){
+        if ($e->getCode() == 1062) {
+            // dont think you can get this exception with this form but better to be safe
+            $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error.
+        }
+        else{
+            throw $e; //TODO
         }
     }
+}
 
-    if(isset($_POST['unsub'])){
-        try{
-            $records = $db->prepare("DELETE FROM tblFeed WHERE UserID = :userId AND LightID = :lightId");
-            $records->bindParam(':lightId', $lightId);
-            $records->bindParam(':userId', $lightViewer);
-            $records->execute();
-        }catch (PDOException $e){
-            if ($e->getCode() == 1062) {
-                // dont think you can get this exception with this form but better to be safe
-                $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error.
-            }
-            else{
-                throw $e; //TODO
-            }
+if(isset($_POST['unsub'])){
+    try{
+        $records = $db->prepare("DELETE FROM tblFeed WHERE UserID = :userId AND LightID = :lightId");
+        $records->bindParam(':lightId', $lightId);
+        $records->bindParam(':userId', $lightViewer);
+        $records->execute();
+    }catch (PDOException $e){
+        if ($e->getCode() == 1062) {
+            // dont think you can get this exception with this form but better to be safe
+            $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error.
+        }
+        else{
+            throw $e; //TODO
         }
     }
+}
     
-    $records = $db->prepare("SELECT * FROM tblLights WHERE LightID = :lightId");
-    $records->bindParam(':lightId', $lightId);
-    $records->execute();
-    $results = $records->fetch(PDO::FETCH_ASSOC);
-    
-    // check if this lightId exists in the database
-    if($results==0){
-        //  Redirect to page stating that the light does not exist. 
-        header("Location: ../error/light-not-found.php");
-    }
-    // check if this light has been deleted.
-    elseif($results['lightDeleted']==1){
-        //  Redirect to page stating that the light does not exist. 
-        header("Location: ../error/light-not-found.php");
-    }
-    else{
-        $lightID = $results['LightID'];
-        $lightName = $results['LightTitle'];
-        $lightDescription = $results['Description'];
-        $lightOwner = $results['UserID'];
-        $lightPublic = $results['Public'];
+$records = $db->prepare("SELECT * FROM tblLights WHERE LightID = :lightId");
+$records->bindParam(':lightId', $lightId);
+$records->execute();
+$results = $records->fetch(PDO::FETCH_ASSOC);
+
+// check if this lightId exists in the database
+if($results==0){
+    //  Redirect to page stating that the light does not exist. 
+    header("Location: ../error/light-not-found.php");
+}
+// check if this light has been deleted.
+elseif($results['lightDeleted']==1){
+    //  Redirect to page stating that the light does not exist. 
+    header("Location: ../error/light-not-found.php");
+}
+else{
+    $lightID = $results['LightID'];
+    $lightName = $results['LightTitle'];
+    $lightDescription = $results['Description'];
+    $lightOwner = $results['UserID'];
+    $lightPublic = $results['Public'];
         
-        // find out if the light is public or private (public = 0 is private, public = 1 is public)
-        if($lightPublic == 0){
-            // if the light is private then need to check if the user is the owner of the light and allowed to view it
-            if($lightOwner!=$lightViewer){
-            //  redirect to page stating that the light is unavailable for public view. 
-            header("Location: ../error/private-light.php");
-            }
+    // find out if the light is public or private (public = 0 is private, public = 1 is public)
+    if($lightPublic == 0){
+        // if the light is private then need to check if the user is the owner of the light and allowed to view it
+        if($lightOwner!=$lightViewer){
+        //  redirect to page stating that the light is unavailable for public view. 
+        header("Location: ../error/private-light.php");
         }
+    }
         
-       $lightColour = $db->prepare("SELECT * FROM tblLightColour WHERE ColourID = :colourId");
-       $lightColour->bindParam(':colourId', $results['ColourID']);
-       $lightColour->execute();
-       $hexCode = $lightColour->fetch(PDO::FETCH_ASSOC);
+$lightColour = $db->prepare("SELECT * FROM tblLightColour WHERE ColourID = :colourId");
+$lightColour->bindParam(':colourId', $results['ColourID']);
+$lightColour->execute();
+$hexCode = $lightColour->fetch(PDO::FETCH_ASSOC);
        
-       $bgColour = $hexCode['HexValue'];
-       $lightState ='on';
+$bgColour = $hexCode['HexValue'];
+$lightState ='on';
        
-       if($results['State']==0){
-         $bgColour = "#7E7E7E";
-         $lightState ='off';
-       }
+if($results['State']==0){
+    $bgColour = "#7E7E7E";
+    $lightState ='off';
     }
     
 }
@@ -137,12 +134,12 @@ else{
   <title>Greenlight</title>
 
   <!-- css -->
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/style.css" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
+  <link href="../css/style.css" rel="stylesheet">
 
   <!-- js / jquery -->
-  <script src="/js/jquery-2.2.4.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
+  <script src="../js/jquery-2.2.4.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
 
 </head>
 
@@ -206,6 +203,11 @@ else{
                              ";
                          }
                         }
+                        
+                        // an edit light link for if the owner is viewing the light and needs to edit it.
+                         if($lightOwner==$lightViewer){
+                         echo "<a href='/dashboard/edit-light/".$lightId."'>Edit Light</a>";
+                         }
                         
                         ?>
                         
