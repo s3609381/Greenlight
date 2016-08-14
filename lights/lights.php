@@ -144,6 +144,25 @@ if($results['State']==0){
 </head>
 
 <body>
+    
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '156826808076031',
+      xfbml      : true,
+      version    : 'v2.7'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
     <!-- nav bar + header -->
     <?php
   
@@ -206,7 +225,8 @@ if($results['State']==0){
                         
                         // an edit light link for if the owner is viewing the light and needs to edit it.
                          if($lightOwner==$lightViewer){
-                         echo "<a href='/dashboard/edit-light/".$lightId."'>Edit Light</a>";
+                         echo "<a href='/dashboard/edit-light/".$lightId."'>Edit Light</a><br/>";
+                         echo "<a href='/dashboard/'>Back to dashboard</a>";
                          }
                         
                         ?>
@@ -220,7 +240,7 @@ if($results['State']==0){
     <hr>
     
     <!-- footer -->
-    <?php include("../modules/footer.php") ?>
+    <?php include("../modules/footer-like.php") ?>
 
     </div>
     <!-- /contatiner -->

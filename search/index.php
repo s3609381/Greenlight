@@ -6,36 +6,58 @@
     include("../config.php");
    
     //Variable $searchField is created from the following line
-   
     parse_str($_SERVER["QUERY_STRING"]);
    
     $outputResults = '';
+    
+    $userId = $_SESSION['user_id'];
    
     if($searchField != null){
         $searchField = trim($searchField);
         $searchField = strtolower($searchField);
-        $searchField = htmlspecialchars($searchField);
+        $searchField = htmlspecialchars($searchField, ENT_NOQUOTES);
+        $searchField = str_ireplace('"', "", $searchField);
        
         $commonWords = array(" the ", " a ", " i ", " an ", " am ", " it ", " in ", " is ", " if ", ", ", ". ", "! ", "? ");
+        $escapes = array("'", ";", ":", "(", ")", "[", "]", "{", "}", "|", "`", "~");
         $searchField = str_ireplace($commonWords, " ", $searchField);
-        $searchTerms = split(' ', $searchField);
-       
-        $query = 'SELECT LightID, UserID, LightTitle, Description, ColourID, State, LightDeleted, Public FROM tblLights WHERE ';
-        $i = 0;
-   
-        foreach ($searchTerms as $term){
-            if($i == 0){
-                $query .= 'LightTitle LIKE \'%'.$term.'%\' OR Description LIKE \'%'.$term.'%\' ';
+        
+        foreach($escapes as $escape){
+            if($escape == "'"){
+                $searchField = str_replace($escape, "\\".$escape, $searchField);
             }
             else{
-                $query .= 'OR LightTitle LIKE \'%'.$term.'%\' OR Description LIKE \'%'.$term.'%\' ';
+                $searchField = str_replace($escape, "", $searchField);
             }
-           
-            $i++;
         }
         
-        $query .= 'AND Public = true';
+        $searchTerms = split(' ', $searchField);
         
+        //Example: SELECT * FROM `tblLights` WHERE (LightTitle LIKE '%'.$term.'%' OR Description LIKE '%'.$term.'%') AND LightDeleted = false AND (Public = true OR (UserID = '.$userId.' AND Public = false))
+        $query = 'SELECT LightID, UserID, LightTitle, Description, ColourID, State FROM tblLights WHERE ';
+        $i = 0;
+   
+        //Add each term to filter results where the term is an exact match, not a partial match. I.e. Test does not return when Testing is found.
+        foreach ($searchTerms as $term){
+            if($i == 0){
+                $query .= '(LightTitle LIKE \'% '.$term.' %\' OR Description LIKE \'% '.$term.' %\' OR LightTitle LIKE \'%'.$term.'%\' OR Description LIKE \'%'.$term.'%\' ';
+           
+                $i++;
+            }
+            else{
+                $query .= 'OR LightTitle LIKE \'% '.$term.' %\' OR Description LIKE \'% '.$term.' %\' OR LightTitle LIKE \'%'.$term.'%\' OR Description LIKE \'%'.$term.'%\' ';
+            }
+        }
+        
+        $query .= ') AND LightDeleted = false ';
+        
+        if($userId != null){
+            $query .= 'AND (Public = true OR (UserID = '.$userId.' AND Public = false))';
+        }
+        else{
+            $query .= 'AND Public = true';
+        }
+
         try{
             $searchQuery = $db->prepare($query);
             $searchQuery->execute();
@@ -50,17 +72,6 @@
                 $searchResults = orderResults($searchResults, $searchTerms);
                 
                 foreach($searchResults as $row){
-                    
-                    // so deleted lights don't display in the results. 
-                    if ($row['LightDeleted']==1){
-                        continue;
-                    }
-                    
-                    // Lights that are NOT set to PUBLIC don't display in the results. (SC 01/08/2016)
-                    if ($row['Public']==0){
-                        continue;
-                    }
-                    
                     // get corresponding hex value for the colour id of the light.
                     $lightColour = $db->prepare("SELECT * FROM tblLightColour WHERE ColourID = :colourId");
                     $lightColour->bindParam(':colourId', $row['ColourID']);
@@ -86,9 +97,17 @@
                                         <p>
                                             <small>".nl2br($row['Description'])."</small>
                                         </p>
-                                        <p>
-                                            <small>Match %: ".nl2br($row['Match'])."</small>
-                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class='row' style='margin-bottom:10px;' id='toggleNav'>
+                                <div class='col-md-12'>
+                                    <div class='input-group'>
+                                        <input type='text' class='form-control' value='".$lightUrl."' readonly>
+                                        <span class='input-group-btn'>
+                                            <button class='btn btn-secondary' type='button'>Copy</button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -97,13 +116,15 @@
             }
         }
         catch(PDOException $e){
-            $outputRows = '<p>'.$e->getCode().': There was a problem with the search terms.<br />Please check and try again.</p>';
+            $outputRows = '<p>'.$e->getCode().': There was a problem with the search terms.<br />Please check and try again.<br />'.$searchField.'</p>';
         }
+    }
+    else{
+        $outputRows = 'Please enter search values.';
     }
     
     function orderResults($resultArray, $resultTerms){
         $orderedResults = array();
-        $termCount = count($resultTerms);
         
         foreach($resultArray as &$result){
             $titleMatch = 0.00;
@@ -111,6 +132,7 @@
             
             $titleCount = 0;
             $descCount = 0;
+            $termCount = 0;
             
             foreach($resultTerms as $term){
                 if(preg_match('/\b'.$term.'\b/i', $result['LightTitle'])){
@@ -122,21 +144,24 @@
                 }
             }
             
-            $titleMatch = ($titleCount / $termCount) * 0.75;
-            $descMatch = ($descCount / $termCount) * 0.25;
+            $titleMatch = ($titleCount / count($resultArray)) * 0.75;
+            $descMatch = ($descCount / count($resultArray)) * 0.25;
             $match = $titleMatch + $descMatch;
-            $result['Match'] = $match;
             
-            $orderedResults[] = $result;
+            if($match != 0){
+                $result['Match'] = $match;
+            
+                $orderedResults[] = $result;
+            }
         }
         
-        uasort($orderedResults, 'cmp');
+        usort($orderedResults, 'cmp');
         
         return $orderedResults;
     }
     
     function cmp($a, $b){
-        if($a['Match'] == $b['Match']){
+        if ($a['Match'] == $b['Match']){
             return 0;
         }
         
@@ -248,5 +273,3 @@
 </body>
 
 </html>
-
-

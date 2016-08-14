@@ -73,15 +73,15 @@ session_start();
             <div class="col-md-12">
                 <div class="panel panel-no-border">
                     <div class="panel-body">
-                        <p>Greenlight is a web application based on tasks you choose to be notified and updated about by displaying a light in any color of your choice. .</p>
+                        <p>Greenlight is a web application based on tasks you choose to be notified and updated about by displaying a light in any color of your choice.</p>
 
-                        <p>Those with an account can subscribe to a light and can be notified by email, text or via a message on a social networking platform when a light’s status changes.</p>
+                        <p>Greenlight web app is capable of notifying the user by email, SMS or various social media accounts linked to the Greenlight web app.</p>
 
-                        <p>A light can also trigger actions when it changes. For example a light could send a preconfigured email when it’s state changes to notify interested parties that something has happened. The Greenlight web application will also be manageable remotely through an API. Users, scripts, client applications, and devices can interact with the API service to send remote requests to get or set the status of a light or send requests to the API to create lights.</p>
+                        <p>Enhanced lights can be created to use as a poll for any purpose you need by simply following the instructions in the menu options.</p>
 
-                        <p>More complex lights can be created that are used for managing more than  just true or false or off and on. These enhanced lights can be used as a visual representation of polling data where a question is asked to users who have access to a light and the light changes its state based on the data received.</p>
+                        <p>In conclusion, Greenlight is a simple way to say yes or no, on or off, I’m here or not here. Lights can be changed via several actions and subscribers to lights can get updates.</p>
 
-                        <p>In conclusion, Greenlight is a simple web based way to say yes or no, on or off, I’m here / not here. Lights can be changed via several actions and subscribers to lights can get updates. A Greenlight can be triggered by an action or the changing of a Greenlight could trigger another action.</p>
+                        <p>Thank you for enquiring about the Greenlight web application.</p>
                     </div>
                 </div>
             </div>

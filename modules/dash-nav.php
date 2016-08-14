@@ -4,12 +4,7 @@
         
         <button type="button" class="list-group-item active nav-header">Navigation</button>
         
-        <!-- delete this session dump button before production -->
-        <button type="button" class="list-group-item" onclick="window.location='/session_dump.php';">View Session</button>
-        
-        
         <button type="button" class="list-group-item" onclick="window.location='/dashboard';">Home</button>
-        
 
         <!-- Create Light links collapsable so that you can choose enhanced or basic -->
         <button href="#toggleNav" class="nav-toggle list-group-item active" type="button">Create Light   <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span></button>

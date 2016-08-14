@@ -60,7 +60,7 @@ if(isset($_POST['submit'])){
   catch (PDOException $e){
     if ($e->getCode() == 1062) {
       // dont think you can get this exception with this form but better to be safe
-      $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error. 
+      $errMsg .= 'Key constraint violation.<br>'; //TODO make this a more user friendly error. 
     }
     else{
       throw $e; //TODO

@@ -1,9 +1,9 @@
-Order Deny,Allow
-Allow from any
-
-<Limit GET POST PUT DELETE>
-  Allow from all
+<Limit GET POST PUT PATCH DELETE OPTIONS HEAD>
+ order allow,deny
+ allow from all
 </Limit>
+
+
 
 # Documents that will display when a particular HTTP error is thrown
 ErrorDocument 404 /error/404.php
@@ -20,9 +20,15 @@ ErrorDocument 403 /error/403.php
   RewriteCond %{SERVER_PORT} ^80$
   RewriteRule ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
   
+  #api/lights
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^api/([^/\.]+)/?$ api.php?url=$1 [PT,L,B]
+  RewriteRule ^api/([^/\.]+)/?$ api.php?url=$1 [PT,B]
+  
+  #api
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^api/lights(/.*)/?$ api.php?url=$1&path=lights [PT,L,B]
   
   # redirect all lights/12345 to lights/lights.php
   RewriteCond %{REQUEST_FILENAME} !-f
@@ -43,8 +49,6 @@ ErrorDocument 403 /error/403.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^user/settings/([^/\.]+)/?$ user/settings/index.php?url=$1 [PT,L,B]
-
-
 
 </IfModule>
 

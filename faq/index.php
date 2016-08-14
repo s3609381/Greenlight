@@ -101,10 +101,20 @@ session_start();
                         <a href="#" style="color: black; "><h3 class="panel-title">Can I set my Greenlight to my own colour?</h3></a>
                     </div>
                     <div class="panel-body panel-body-hidden">
-                        At this stage you can choose from a range of 6 different colours. There are plans to provide users with the ability to create their own colour from a colour selection chart.
+                        At this stage you can choose from a range of 20 different colours. There are plans to provide users with the ability to create their own colour from a colour selection chart.
                     </div>
                 </div>
 
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>
+                        <a href="#" style="color: black; "><h3 class="panel-title">How do I delete a light I have created but do not use anymore?</h3></a>
+                    </div>
+                    <div class="panel-body panel-body-hidden">
+                        Click on the "edit light" button and then the "delete light" button.
+                    </div>
+                </div>
+                
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-plus pull-right" aria-hidden="true"></span>

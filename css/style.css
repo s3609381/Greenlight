@@ -57,21 +57,30 @@ textarea {
 /* this is used as the 'greenlight' until our actual graphic is ready */
 .temp-greenlight{
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  border: 1px solid #000;
+  width: 64px;
+  height: 64px;
+  border: 2px solid #000;
   background-color: #5cb85c;
-  margin-left: 10px;
-  margin-top: 10px;
+  margin-left: 6px;
+  margin-top: 5px;
 }
 
 .temp-greenlight-feed{
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  border: 1px solid #000;
+  border: 2px solid #000;
   background-color: #5cb85c;
   margin: 0 auto;
+}
+
+.light-bg {
+  border: 1px solid #000;
+  width: 75px;
+  height: 75px;
+  background: url(../images/lightBackgroundImage.png);
+  background-size: 75px 75px;
+  background-repeat: no-repeat;
 }
 
 .tooltip-inner {

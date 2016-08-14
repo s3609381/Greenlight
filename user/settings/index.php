@@ -55,6 +55,42 @@ $tblLightColourResults = $tblLightColourRecords->fetch(PDO::FETCH_ASSOC);
 
 $lightHexValue = $tblLightColourResults['HexValue'];
 
+// disable account
+if(isset($_POST['disable'])){
+  
+  // set the account to inactive (Active = 0)
+  $updateUser = $db->prepare("UPDATE tblUsers SET Active = 0 WHERE UserID = :userID");
+  $updateUser->bindParam(':userID', $profileUserId);
+  $updateUser->execute();
+  
+  // delete all lights from the subscription table (tblFeed)
+  
+  // get all lightIDs of lights to be deleted
+  $getLights = $db->prepare("SELECT * FROM tblLights WHERE UserID = :userID");
+  $getLights->bindParam(':userID', $profileUserId);
+  $getLights->execute();
+  $lights = $getLights->fetchAll(PDO::FETCH_ASSOC);
+  
+  // iterate through the users lights and then remove them from tblFeed
+  foreach($lights as $light){
+    
+    $deleteFromFeed = $db->prepare("DELETE FROM tblFeed WHERE LightID = :lightId");
+    $deleteFromFeed->bindParam(':lightId', $light['LightID']);
+    $deleteFromFeed->execute();
+    
+  }
+  
+  //'delete' all the users lights (LightDeleted = 1)
+  $deleteLight = $db->prepare("UPDATE tblLights SET LightDeleted = 1 WHERE UserID = :userID");
+  $deleteLight->bindParam(':userID', $profileUserId);
+  $deleteLight->execute();
+    
+  // Log the user out when they have disabled their account
+  header("Location: ../../logout.php");
+  
+}
+
+
 if(isset($_POST['update'])){
   $successMsg = '';
  
@@ -112,7 +148,6 @@ if(isset($_POST['update'])){
 
     $newDefaultLightID = $tblLightColourResults['ColourID'];
     
-    try{
     $updateUserDetails = $db->prepare("UPDATE tblUserDetailsSettings SET DefaultLightColourID = :lightID, MobileNumber = :newMobile WHERE UserID = :userID");
     $updateUserDetails->bindParam(':lightID', $newDefaultLightID);
     $updateUserDetails->bindParam(':newMobile', $newMob);
@@ -121,22 +156,13 @@ if(isset($_POST['update'])){
     
     $updateSuccess = true;
   }
-  catch (PDOException $e){
-    if ($e->getCode() == 1062) {
-      // dont think you can get this exception with this form but better to be safe
-      $errMsg .= 'Key constrain violation.<br>'; //TODO make this a more user friendly error. 
-    }
-    else{
-      throw $e; //TODO
-    }
-  }
-    
-  }
   
-  // Display message to user that their update was successful or remind them to enter stuff in the form if they left all fields empty. 
+  // Display message to user that their update was successful
   if($updateSuccess){
     $successMsg .= 'Details updated successfully.';
-  }else{
+  }
+  // Remind user to enter stuff in the form if they left all fields empty.   
+  else{
     $successMsg .= 'Please enter details you wish to update.';
   }
 }
@@ -354,7 +380,21 @@ if(isset($_POST['update'])){
                     <input class="btn btn-default" type="button" name='cancel' value="Cancel" onclick="window.location='/dashboard/';" />
                   </div>
                 </div>
-              </form>
+                </form>
+                <form action="" method="post" class="form-horizontal" >
+                
+                
+                <div class="form-group">
+                  <div class="col-sm-offset-3 col-sm-9">
+                    <hr/>
+                    <input class="btn btn-danger btn-sm pull-right" type="submit" name='disable' value="Deactivate Account" onclick="return confirm('Are you sure you wish to disable your account? Your lights will be deleted, although you can re-activate again within 6 months.')" />
+                  </div>
+                </div>
+                
+                </form>
+                
+                
+              
             
         </div>
      

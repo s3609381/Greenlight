@@ -40,47 +40,10 @@
 </head>
 
 <body>
-    
-<form id="registerForm" class="form-horizontal">
-    <div class="form-group">
-        <label class="col-lg-3 control-label">Password</label>
-        <div class="col-lg-5">
-            <input type="password" class="form-control" name="password" />
-        </div>
-    </div>
 
-    <div class="form-group">
-        <label class="col-lg-3 control-label">Retype password</label>
-        <div class="col-lg-5">
-            <input type="password" class="form-control" name="confirmPassword" />
-        </div>
-    </div>
-</form>
-
-<script>
-
-
-$(document).ready(function() {
-    $('#registerForm').bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            password: {},
-            confirmPassword: {
-                validators: {
-                    identical: {
-                        field: 'password',
-                        message: 'The password and its confirm are not the same'
-                    }
-                }
-            }
-        }
-    });
-});
-</script>
+<div class="light-bg">
+<div class="temp-greenlight"></div>
+</div>
 
 
 

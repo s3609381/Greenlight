@@ -11,6 +11,6 @@ try {
  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  //echo "Database Connected successfully (dont forget to remove msgs at production)";
 } catch(PDOException $e) { 
- echo "Connection failed: " . $e->getMessage(); 
+ //echo "Connection failed: " . $e->getMessage(); 
 } 
 ?>

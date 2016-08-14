@@ -12,7 +12,14 @@
           <script>
             document.write(new Date().getFullYear());
           </script>. </p>
+      <div
+        class="fb-like"
+        data-share="true"
+        data-width="450"
+        data-show-faces="true">
       </div>
+      </div>
+
       <div class="col-xs-6 col-md-4">
 
         <form class="form-inline pull-right-lg" role="search" action="/search/?searchField">

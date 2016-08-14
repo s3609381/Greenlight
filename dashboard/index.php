@@ -69,6 +69,9 @@ $feedLightResults = $feedLights->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
+  
+
+  
   <!-- nav bar + header -->
   
   <?php
